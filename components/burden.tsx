@@ -51,7 +51,7 @@ export default function Burden() {
 
         {/* Pull quote */}
         <div className="bg-kido-navy rounded-xl px-6 py-4 text-center">
-          <p className="text-sm font-bold text-[#F0EEFF] leading-relaxed">
+          <p className="text-sm font-bold text-kido-off-white leading-relaxed">
             "Pediatricians see a snapshot.{' '}
             <span className="text-kido-coral">Families live the story.</span>"
           </p>

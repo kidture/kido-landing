@@ -18,6 +18,7 @@ const config: Config = {
           'purple-border-light': '#EDE9FE',
           muted: '#6B7280',
           'purple-muted': '#9B8EC4',
+          'off-white': '#F0EEFF',
         },
       },
       fontFamily: {
