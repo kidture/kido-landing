@@ -1,4 +1,4 @@
-export async function saveEmail(email: string): Promise<void> {
+export async function saveEmail(email: string, country: 'US' | 'UK'): Promise<void> {
   const webhookUrl = process.env.SHEETS_WEBHOOK_URL
 
   if (!webhookUrl) {
@@ -8,7 +8,7 @@ export async function saveEmail(email: string): Promise<void> {
   const res = await fetch(webhookUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, submittedAt: new Date().toISOString() }),
+    body: JSON.stringify({ email, country, submittedAt: new Date().toISOString() }),
   })
 
   if (!res.ok) {
