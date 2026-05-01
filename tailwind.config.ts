@@ -19,6 +19,7 @@ const config: Config = {
           muted: '#6B7280',
           'purple-muted': '#9B8EC4',
           'off-white': '#F0EEFF',
+          'bg-soft': '#FAFBFF',
         },
       },
       fontFamily: {

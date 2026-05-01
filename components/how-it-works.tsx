@@ -27,7 +27,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="bg-[#FAFBFF] px-6 py-24">
+    <section id="how-it-works" className="bg-kido-bg-soft px-6 py-24">
       <div className="max-w-5xl mx-auto">
 
         <div className="text-center mb-16">

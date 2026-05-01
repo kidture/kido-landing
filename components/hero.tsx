@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section className="bg-gradient-to-b from-[#FAFBFF] to-white px-6 py-24 text-center">
+    <section className="bg-gradient-to-b from-kido-bg-soft to-white px-6 py-24 text-center">
       <div className="max-w-3xl mx-auto">
 
         {/* Badge */}
