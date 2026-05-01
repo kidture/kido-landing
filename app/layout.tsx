@@ -42,6 +42,13 @@ export const metadata: Metadata = {
   metadataBase: metadataBaseUrl,
   title: pageTitle,
   description: pageDescription,
+  icons: {
+    icon: [
+      { url: "/kido-logo.png", type: "image/png" },
+      { url: "/kido-logo.png", rel: "shortcut icon", type: "image/png" },
+    ],
+    apple: [{ url: "/kido-logo.png", type: "image/png" }],
+  },
   openGraph: {
     title: pageTitle,
     description: pageDescription,
