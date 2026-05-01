@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export default function Hero() {
   return (
     <section className="bg-gradient-to-b from-kido-bg-soft to-white px-6 py-24 text-center">
@@ -21,6 +23,32 @@ export default function Hero() {
           Kido turns your daily observations into structured signals your care team can finally act on.
         </p>
 
+        {/* Caregiving moments */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10 max-w-2xl mx-auto">
+          <div className="relative overflow-hidden rounded-2xl border border-kido-purple-border-light shadow-[0_16px_35px_rgba(26,14,48,0.12)]">
+            <Image
+              src="/care-moment-1.jpg"
+              alt="Parent supporting child with care at home"
+              width={1024}
+              height={1024}
+              className="w-full h-52 sm:h-64 object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-kido-navy/25 to-transparent" />
+          </div>
+          <div className="relative overflow-hidden rounded-2xl border border-kido-purple-border-light shadow-[0_16px_35px_rgba(26,14,48,0.12)] sm:translate-y-6">
+            <Image
+              src="/care-moment-2.jpg"
+              alt="Parent and child sharing a healthy joyful moment"
+              width={768}
+              height={1024}
+              className="w-full h-52 sm:h-64 object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-kido-navy/20 to-transparent" />
+          </div>
+        </div>
+
         {/* CTAs */}
         <div className="flex flex-wrap gap-3 justify-center mb-12">
           <a
@@ -41,9 +69,9 @@ export default function Hero() {
         <div className="bg-kido-purple-tint border border-kido-purple-border-light rounded-[14px] px-6 py-5 flex flex-col sm:flex-row justify-around items-center gap-6 max-w-xl mx-auto">
           <Stat value="25M" label={<>US children living with<br />a chronic condition</>} />
           <div className="hidden sm:block w-px h-10 bg-kido-purple-border" />
-          <Stat value="<60s" label={<>to log anything —<br />no forms, ever</>} />
+          <Stat value="<90s" label={<>to log anything <br />no forms, ever</>} />
           <div className="hidden sm:block w-px h-10 bg-kido-purple-border" />
-          <Stat value="296" label={<>hours a year — the invisible<br />work Kido makes count</>} />
+          <Stat value="296" label={<>hours a year, the invisible<br />work Kido makes count</>} />
         </div>
 
       </div>

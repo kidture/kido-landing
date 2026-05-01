@@ -1,10 +1,18 @@
+import Image from 'next/image'
+
 export default function Nav() {
   return (
     <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-100">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         <a href="/" className="flex items-center gap-0.5">
-          <span className="text-2xl font-black text-kido-navy tracking-tight">kido</span>
-          <span className="text-2xl font-black text-kido-coral">!</span>
+          <Image
+            src="/kido-logo.png"
+            alt="Kido logo"
+            width={110}
+            height={44}
+            className="h-11 w-auto scale-[2.1] origin-left"
+            priority
+          />
         </a>
 
         <div className="flex items-center gap-8">

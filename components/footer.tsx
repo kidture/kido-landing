@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export default function Footer() {
   return (
     <footer className="bg-kido-near-black px-6 py-10">
@@ -6,8 +8,13 @@ export default function Footer() {
         {/* Top row */}
         <div className="flex flex-wrap justify-between items-center gap-6 mb-6">
           <a href="/" className="flex items-center gap-0.5">
-            <span className="text-xl font-black text-kido-off-white tracking-tight">kido</span>
-            <span className="text-xl font-black text-kido-coral">!</span>
+            <Image
+              src="/kido-logo.png"
+              alt="Kido logo"
+              width={100}
+              height={40}
+              className="h-10 w-auto scale-[1.9] origin-left"
+            />
           </a>
           <nav className="flex flex-wrap gap-6">
             {[
