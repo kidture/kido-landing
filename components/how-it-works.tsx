@@ -43,7 +43,7 @@ export default function HowItWorks() {
           {steps.map((step) => (
             <React.Fragment key={step.number}>
               <div className="flex flex-col items-center text-center">
-                <div className="mb-6 relative w-full max-w-[220px] rounded-3xl border border-kido-purple-border-light bg-white px-4 pt-4 pb-3 shadow-[0_20px_40px_rgba(26,14,48,0.09)]">
+                {/* <div className="mb-6 relative w-full max-w-[220px] rounded-3xl border border-kido-purple-border-light bg-white px-4 pt-4 pb-3 shadow-[0_20px_40px_rgba(26,14,48,0.09)]">
                   <div className="rounded-2xl bg-gradient-to-b from-white to-kido-purple-tint border border-kido-purple-border-light p-3 text-left">
                     <div className="h-1.5 w-10 bg-kido-purple/30 rounded-full mb-2" />
                     <div className="h-1.5 w-16 bg-kido-purple/25 rounded-full mb-3" />
@@ -56,7 +56,7 @@ export default function HowItWorks() {
                   <div className="absolute -bottom-3 -right-3 w-10 h-10 bg-kido-purple rounded-full flex items-center justify-center text-lg shadow-lg">
                     {step.emoji}
                   </div>
-                </div>
+                </div> */}
 
                 <div className="text-xs font-bold text-kido-purple-muted uppercase tracking-widest mb-1">
                   Step {step.number}

@@ -86,7 +86,7 @@ export default function WaitlistForm() {
     >
       <div className="pointer-events-none absolute -left-24 top-0 h-72 w-72 rounded-full bg-kido-purple/25 blur-3xl animate-glow-breathe" />
       <div className="pointer-events-none absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-kido-coral/20 blur-3xl animate-glow-breathe" />
-      <div className="max-w-xl mx-auto relative">
+      <div className="max-w-3xl mx-auto relative">
         <div className="rounded-3xl border border-white/15 bg-white/[0.05] backdrop-blur-md px-5 py-10 sm:px-8 shadow-[0_22px_55px_rgba(5,2,16,0.45)]">
 
         <p className="text-xs font-bold text-kido-purple-muted uppercase tracking-[0.2em] mb-5">
@@ -106,23 +106,26 @@ export default function WaitlistForm() {
             You&apos;re on the list. We&apos;ll be in touch before beta opens. 🎉
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-stretch gap-3 mb-4">
+          <form
+            onSubmit={handleSubmit}
+            className="grid grid-cols-1 gap-3 mb-4 sm:grid-cols-2 md:grid-cols-[minmax(0,1fr)_12rem_auto] md:items-stretch"
+          >
             <input
               type="email"
               required
               placeholder="your@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 h-12 bg-white/[0.08] border border-white/20 rounded-xl px-4 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-white/40 transition-colors"
+              className="h-12 bg-white/[0.08] border border-white/20 rounded-xl px-4 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-white/40 transition-colors min-w-0"
             />
-            <div className="relative sm:w-48" ref={countryMenuRef}>
+            <div className="relative" ref={countryMenuRef}>
               <button
                 type="button"
                 aria-haspopup="listbox"
                 aria-expanded={isCountryOpen}
                 aria-label="Country"
                 onClick={() => setIsCountryOpen((prev) => !prev)}
-                className="w-full h-12 bg-white/[0.08] border border-white/20 rounded-xl px-4 pr-11 text-sm text-white focus:outline-none focus:border-white/40 transition-colors text-left"
+                className="w-full h-12 bg-white/[0.08] border border-white/20 rounded-xl px-4 pr-11 text-sm text-white focus:outline-none focus:border-white/40 transition-colors text-left whitespace-nowrap overflow-hidden text-ellipsis"
               >
                 {COUNTRIES.find((item) => item.code === country)?.label}
               </button>
@@ -148,7 +151,7 @@ export default function WaitlistForm() {
                         setCountry(item.code)
                         setIsCountryOpen(false)
                       }}
-                      className="w-full flex items-center justify-between px-4 py-3 text-sm text-white hover:bg-white/10 transition-colors"
+                      className="w-full flex items-center justify-between px-4 py-3 text-sm text-white hover:bg-white/10 transition-colors whitespace-nowrap"
                     >
                       <span>{item.label}</span>
                       {country === item.code && (
@@ -170,7 +173,7 @@ export default function WaitlistForm() {
             <button
               type="submit"
               disabled={state === 'loading'}
-              className="h-12 bg-kido-coral text-white font-bold px-6 rounded-xl text-sm shadow-[0_8px_22px_rgba(232,120,74,0.4)] hover:bg-orange-500 disabled:opacity-60 transition-colors whitespace-nowrap"
+              className="h-12 sm:col-span-2 md:col-span-1 bg-kido-coral text-white font-bold px-6 rounded-xl text-sm shadow-[0_8px_22px_rgba(232,120,74,0.4)] hover:bg-orange-500 disabled:opacity-60 transition-colors whitespace-nowrap"
             >
               {state === 'loading' ? 'Sending…' : 'Get early access →'}
             </button>
