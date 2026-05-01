@@ -1,6 +1,7 @@
 import Nav from '@/components/nav'
 import Hero from '@/components/hero'
 import Burden from '@/components/burden'
+import Answer from '@/components/answer'
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Nav />
       <Hero />
       <Burden />
+      <Answer />
     </main>
   )
 }
