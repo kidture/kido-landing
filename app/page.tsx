@@ -3,6 +3,7 @@ import Hero from '@/components/hero'
 import Burden from '@/components/burden'
 import Answer from '@/components/answer'
 import HowItWorks from '@/components/how-it-works'
+import Families from '@/components/families'
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Burden />
       <Answer />
       <HowItWorks />
+      <Families />
     </main>
   )
 }
