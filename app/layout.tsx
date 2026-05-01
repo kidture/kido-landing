@@ -44,10 +44,10 @@ export const metadata: Metadata = {
   description: pageDescription,
   icons: {
     icon: [
-      { url: "/kido-logo.png", type: "image/png" },
-      { url: "/kido-logo.png", rel: "shortcut icon", type: "image/png" },
+      { url: "/kido-logo.png?v=2", type: "image/png" },
+      { url: "/kido-logo.png?v=2", rel: "shortcut icon", type: "image/png" },
     ],
-    apple: [{ url: "/kido-logo.png", type: "image/png" }],
+    apple: [{ url: "/kido-logo.png?v=2", type: "image/png" }],
   },
   openGraph: {
     title: pageTitle,
