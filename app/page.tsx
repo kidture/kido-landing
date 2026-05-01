@@ -4,6 +4,7 @@ import Burden from '@/components/burden'
 import Answer from '@/components/answer'
 import HowItWorks from '@/components/how-it-works'
 import Families from '@/components/families'
+import Clinical from '@/components/clinical'
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Answer />
       <HowItWorks />
       <Families />
+      <Clinical />
     </main>
   )
 }
