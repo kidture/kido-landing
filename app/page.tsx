@@ -6,6 +6,7 @@ import HowItWorks from '@/components/how-it-works'
 import Families from '@/components/families'
 import Clinical from '@/components/clinical'
 import WaitlistForm from '@/components/waitlist-form'
+import Footer from '@/components/footer'
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Families />
       <Clinical />
       <WaitlistForm />
+      <Footer />
     </main>
   )
 }
