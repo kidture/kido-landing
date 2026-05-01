@@ -99,7 +99,7 @@ export default function WaitlistForm() {
         </p>
 
         {state === 'success' ? (
-          <div className="bg-emerald-500/20 border border-emerald-500/30 rounded-xl px-6 py-5 text-emerald-300 font-semibold text-sm">
+          <div className="bg-emerald-500/20 border border-emerald-500/30 rounded-xl px-6 py-5 text-emerald-300 font-semibold text-sm mb-4">
             You&apos;re on the list. We&apos;ll be in touch before beta opens. 🎉
           </div>
         ) : (
@@ -175,19 +175,26 @@ export default function WaitlistForm() {
         )}
 
         {state === 'error' && (
-          <p className="text-red-400 text-xs mb-3">Something went wrong — please try again.</p>
+          <p className="text-red-400 text-xs mb-4">Something went wrong — please try again.</p>
         )}
 
-        <p className="text-xs text-white/30 mb-8">No spam. We&apos;ll reach out when beta opens.</p>
+        <p className="text-xs text-white/30 mb-6">No spam. We&apos;ll reach out when beta opens.</p>
 
         {/* Social proof avatars */}
-        <div className="flex justify-center items-center gap-3">
+        <div className="flex justify-center items-center gap-3 pb-1">
           <div className="flex">
-            {['bg-kido-purple', 'bg-kido-coral', 'bg-kido-purple-muted'].map((color, i) => (
+            {[
+              { color: 'bg-kido-purple', initial: 'A' },
+              { color: 'bg-kido-coral', initial: 'S' },
+              { color: 'bg-kido-purple-muted', initial: 'E' },
+            ].map((avatar, i) => (
               <div
-                key={color}
-                className={`w-7 h-7 ${color} rounded-full border-2 border-kido-navy ${i > 0 ? '-ml-2' : ''}`}
-              />
+                key={avatar.initial}
+                className={`w-7 h-7 ${avatar.color} rounded-full border border-white/25 ${i > 0 ? '-ml-2' : ''} text-[10px] font-bold text-white flex items-center justify-center`}
+                aria-hidden="true"
+              >
+                {avatar.initial}
+              </div>
             ))}
           </div>
           <p className="text-xs text-white/40">Join families already on the list</p>
