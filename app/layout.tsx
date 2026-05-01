@@ -12,13 +12,34 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://kido.health";
+function getMetadataBaseUrl(): URL {
+  const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  const fallback = "https://kido.health";
+
+  if (!rawSiteUrl) {
+    return new URL(fallback);
+  }
+
+  // Vercel env values are sometimes set as bare domains; normalize them.
+  const withProtocol = /^https?:\/\//i.test(rawSiteUrl)
+    ? rawSiteUrl
+    : `https://${rawSiteUrl}`;
+
+  try {
+    return new URL(withProtocol);
+  } catch {
+    return new URL(fallback);
+  }
+}
+
+const metadataBaseUrl = getMetadataBaseUrl();
+const siteUrl = metadataBaseUrl.toString().replace(/\/$/, "");
 const pageTitle = "Kido Health - Turn Family Observations Into Clinical Signals";
 const pageDescription =
   "Kido helps families capture daily pediatric health observations and turns them into structured insights care teams can act on.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: metadataBaseUrl,
   title: pageTitle,
   description: pageDescription,
   openGraph: {
