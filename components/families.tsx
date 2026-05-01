@@ -59,7 +59,7 @@ export default function Families() {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           {families.map((f) => (
-            <div key={f.name} className="bg-white border border-kido-purple-border-light rounded-card overflow-hidden shadow-sm">
+            <div key={f.name} className="bg-white border border-kido-purple-border-light rounded-card overflow-hidden shadow-[0_16px_36px_rgba(26,14,48,0.08)]">
 
               {/* Card header */}
               <div className={`${f.headerBg} px-4 py-3`}>
@@ -76,7 +76,7 @@ export default function Families() {
                 </div>
 
                 {/* Kido surfaces bubble */}
-                <div className={`${f.kidoBubbleBg} rounded-lg p-3`}>
+                <div className={`${f.kidoBubbleBg} rounded-lg p-3 border border-kido-purple-border-light/70`}>
                   <p className={`text-xs font-semibold ${f.kidoLabel} mb-1`}>Kido surfaces</p>
                   <p className="text-xs text-kido-navy leading-relaxed">{f.kidoFinds}</p>
                 </div>

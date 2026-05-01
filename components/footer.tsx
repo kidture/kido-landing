@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Footer() {
   return (
@@ -7,7 +8,7 @@ export default function Footer() {
 
         {/* Top row */}
         <div className="flex flex-wrap justify-between items-center gap-6 mb-6">
-          <a href="/" className="flex items-center gap-0.5">
+          <Link href="/" className="flex items-center gap-0.5">
             <Image
               src="/kido-logo.png"
               alt="Kido logo"
@@ -15,7 +16,7 @@ export default function Footer() {
               height={40}
               className="h-10 w-auto scale-[1.9] origin-left"
             />
-          </a>
+          </Link>
           <nav className="flex flex-wrap gap-6">
             {[
               { label: 'How it works', href: '#how-it-works' },

@@ -20,3 +20,50 @@
 .animate-pulse-dot {
   animation: pulse-dot 2s ease-in-out infinite;
 }
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes glow-breathe {
+  0%, 100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.75;
+  }
+}
+
+@layer utilities {
+  .bg-kido-mesh {
+    background:
+      radial-gradient(circle at 20% 18%, rgba(124, 58, 237, 0.2), transparent 36%),
+      radial-gradient(circle at 78% 30%, rgba(232, 120, 74, 0.16), transparent 32%),
+      radial-gradient(circle at 50% 78%, rgba(26, 14, 48, 0.12), transparent 42%),
+      linear-gradient(180deg, #fafbff 0%, #f4f1ff 52%, #ffffff 100%);
+  }
+
+  .kido-noise::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.34) 0.4px, transparent 0.4px);
+    background-size: 3px 3px;
+    opacity: 0.18;
+    mix-blend-mode: soft-light;
+  }
+
+  .animate-float-slow {
+    animation: float-slow 7s ease-in-out infinite;
+  }
+
+  .animate-glow-breathe {
+    animation: glow-breathe 6s ease-in-out infinite;
+  }
+}

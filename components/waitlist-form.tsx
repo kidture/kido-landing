@@ -81,10 +81,13 @@ export default function WaitlistForm() {
   return (
     <section
       id="waitlist"
-      className="px-6 py-24 text-center scroll-mt-28"
-      style={{ background: 'linear-gradient(160deg, #1A0E30 0%, #2D1B69 100%)' }}
+      className="relative overflow-hidden px-6 py-24 text-center scroll-mt-28"
+      style={{ background: 'linear-gradient(160deg, #1A0E30 0%, #2D1B69 58%, #251550 100%)' }}
     >
-      <div className="max-w-xl mx-auto">
+      <div className="pointer-events-none absolute -left-24 top-0 h-72 w-72 rounded-full bg-kido-purple/25 blur-3xl animate-glow-breathe" />
+      <div className="pointer-events-none absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-kido-coral/20 blur-3xl animate-glow-breathe" />
+      <div className="max-w-xl mx-auto relative">
+        <div className="rounded-3xl border border-white/15 bg-white/[0.05] backdrop-blur-md px-5 py-10 sm:px-8 shadow-[0_22px_55px_rgba(5,2,16,0.45)]">
 
         <p className="text-xs font-bold text-kido-purple-muted uppercase tracking-[0.2em] mb-5">
           Beta launching Summer 2026
@@ -167,7 +170,7 @@ export default function WaitlistForm() {
             <button
               type="submit"
               disabled={state === 'loading'}
-              className="h-12 bg-kido-coral text-white font-bold px-6 rounded-xl text-sm shadow-[0_4px_14px_rgba(232,120,74,0.4)] hover:bg-orange-500 disabled:opacity-60 transition-colors whitespace-nowrap"
+              className="h-12 bg-kido-coral text-white font-bold px-6 rounded-xl text-sm shadow-[0_8px_22px_rgba(232,120,74,0.4)] hover:bg-orange-500 disabled:opacity-60 transition-colors whitespace-nowrap"
             >
               {state === 'loading' ? 'Sending…' : 'Get early access →'}
             </button>
@@ -198,6 +201,7 @@ export default function WaitlistForm() {
             ))}
           </div>
           <p className="text-xs text-white/40">Join families already on the list</p>
+        </div>
         </div>
 
       </div>

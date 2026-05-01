@@ -26,8 +26,9 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="bg-kido-bg-soft px-6 py-24 scroll-mt-28">
-      <div className="max-w-5xl mx-auto">
+    <section id="how-it-works" className="relative overflow-hidden bg-kido-bg-soft px-6 py-24 scroll-mt-28">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-kido-purple/10 to-transparent" />
+      <div className="max-w-5xl mx-auto relative">
 
         <div className="text-center mb-16">
           <p className="text-xs font-bold text-kido-purple uppercase tracking-widest mb-3">
@@ -42,18 +43,19 @@ export default function HowItWorks() {
           {steps.map((step) => (
             <React.Fragment key={step.number}>
               <div className="flex flex-col items-center text-center">
-                {/* Phone mockup */}
-                <div className="mb-6 relative">
-                  {/* <Image
-                    src="/phone-placeholder.svg"
-                    alt={`Kido app screen — ${step.title}`}
-                    width={120}
-                    height={220}
-                    className="drop-shadow-sm"
-                  /> */}
-                  {/* <div className="absolute -bottom-3 -right-3 w-10 h-10 bg-kido-purple rounded-full flex items-center justify-center text-lg shadow-lg">
+                <div className="mb-6 relative w-full max-w-[220px] rounded-3xl border border-kido-purple-border-light bg-white px-4 pt-4 pb-3 shadow-[0_20px_40px_rgba(26,14,48,0.09)]">
+                  <div className="rounded-2xl bg-gradient-to-b from-white to-kido-purple-tint border border-kido-purple-border-light p-3 text-left">
+                    <div className="h-1.5 w-10 bg-kido-purple/30 rounded-full mb-2" />
+                    <div className="h-1.5 w-16 bg-kido-purple/25 rounded-full mb-3" />
+                    <div className="space-y-1.5">
+                      <div className="h-2 bg-kido-purple/20 rounded-full" />
+                      <div className="h-2 bg-kido-purple/20 rounded-full w-4/5" />
+                      <div className="h-2 bg-kido-coral/30 rounded-full w-3/5" />
+                    </div>
+                  </div>
+                  <div className="absolute -bottom-3 -right-3 w-10 h-10 bg-kido-purple rounded-full flex items-center justify-center text-lg shadow-lg">
                     {step.emoji}
-                  </div> */}
+                  </div>
                 </div>
 
                 <div className="text-xs font-bold text-kido-purple-muted uppercase tracking-widest mb-1">

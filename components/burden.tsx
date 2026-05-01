@@ -18,8 +18,9 @@ const cards = [
 
 export default function Burden() {
   return (
-    <section className="bg-white px-6 py-24">
-      <div className="max-w-5xl mx-auto">
+    <section className="relative overflow-hidden bg-white px-6 py-24">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-kido-purple/5 to-transparent" />
+      <div className="max-w-5xl mx-auto relative">
 
         {/* Header */}
         <div className="text-center mb-12">
@@ -27,11 +28,11 @@ export default function Burden() {
             The signal exists
           </p>
           <h2 className="text-3xl sm:text-4xl font-black text-kido-navy tracking-tight leading-tight mb-4">
-            It's just never been structured.
+            It&apos;s just never been structured.
           </h2>
           <p className="text-sm text-kido-muted leading-relaxed max-w-lg mx-auto">
-            Parents already hold everything a clinician needs. The problem isn't missing
-            information — it's missing infrastructure.
+            Parents already hold everything a clinician needs. The problem isn&apos;t missing
+            information — it&apos;s missing infrastructure.
           </p>
         </div>
 
@@ -40,10 +41,10 @@ export default function Burden() {
           {cards.map((card) => (
             <div
               key={card.title}
-              className="bg-kido-purple-tint border border-kido-purple-border-light rounded-card p-5"
+              className="bg-gradient-to-b from-kido-purple-tint to-white border border-kido-purple-border-light rounded-card p-5 shadow-[0_14px_30px_rgba(26,14,48,0.06)]"
             >
               <div className="mb-3">
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-kido-purple-border bg-white shadow-sm">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-kido-purple-border bg-white shadow-sm shadow-kido-purple/10">
                   <CardIcon icon={card.icon} />
                 </span>
               </div>
@@ -54,7 +55,7 @@ export default function Burden() {
         </div>
 
         {/* Pull quote */}
-        <div className="bg-kido-navy rounded-xl px-6 py-4 text-center">
+        <div className="bg-kido-navy rounded-xl px-6 py-4 text-center shadow-[0_16px_45px_rgba(26,14,48,0.34)]">
           <p className="text-sm font-bold text-kido-off-white leading-relaxed">
             &quot;Pediatricians see a snapshot.{' '}
             <span className="text-kido-coral">Families live the story.</span>&quot;

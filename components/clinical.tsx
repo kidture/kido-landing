@@ -1,6 +1,7 @@
 export default function Clinical() {
   return (
-    <section id="clinical" className="bg-kido-bg-soft px-6 py-24 scroll-mt-28">
+    <section id="clinical" className="relative overflow-hidden bg-kido-bg-soft px-6 py-24 scroll-mt-28">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-kido-purple/10 to-transparent" />
       <div className="max-w-2xl mx-auto">
 
         <div className="text-center mb-12">
@@ -13,7 +14,7 @@ export default function Clinical() {
         </div>
 
         {/* Quote block */}
-        <div className="bg-kido-navy rounded-2xl px-8 py-8 mb-4">
+        <div className="bg-kido-navy rounded-2xl px-8 py-8 mb-4 shadow-[0_18px_48px_rgba(26,14,48,0.35)]">
           <div className="text-4xl text-kido-coral font-black leading-none mb-4" style={{ fontFamily: 'Georgia, serif' }}>
             &quot;
           </div>
@@ -35,7 +36,7 @@ export default function Clinical() {
         </div>
 
         {/* AAP policy block */}
-        <div className="bg-kido-purple-tint border border-kido-purple-border-light rounded-card px-5 py-4 flex gap-4 items-start">
+        <div className="bg-kido-purple-tint border border-kido-purple-border-light rounded-card px-5 py-4 flex gap-4 items-start shadow-[0_10px_24px_rgba(26,14,48,0.07)]">
           <div className="bg-kido-purple rounded-lg px-2.5 py-1.5 flex-shrink-0 mt-0.5">
             <span className="text-xs font-bold text-white uppercase tracking-wide">AAP</span>
           </div>
