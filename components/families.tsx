@@ -42,7 +42,7 @@ const families = [
 
 export default function Families() {
   return (
-    <section className="bg-white px-6 py-24">
+    <section id="families" className="bg-white px-6 py-24 scroll-mt-28">
       <div className="max-w-5xl mx-auto">
 
         <div className="text-center mb-12">

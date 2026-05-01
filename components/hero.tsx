@@ -69,7 +69,7 @@ export default function Hero() {
         <div className="bg-kido-purple-tint border border-kido-purple-border-light rounded-[14px] px-6 py-5 flex flex-col sm:flex-row justify-around items-center gap-6 max-w-xl mx-auto">
           <Stat value="25M" label={<>US children living with<br />a chronic condition</>} />
           <div className="hidden sm:block w-px h-10 bg-kido-purple-border" />
-          <Stat value="<90s" label={<>to log anything <br />no forms, ever</>} />
+          <Stat value="<60s" label={<>to log anything <br />no forms, ever</>} />
           <div className="hidden sm:block w-px h-10 bg-kido-purple-border" />
           <Stat value="296" label={<>hours a year, the invisible<br />work Kido makes count</>} />
         </div>

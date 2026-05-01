@@ -81,7 +81,7 @@ export default function WaitlistForm() {
   return (
     <section
       id="waitlist"
-      className="px-6 py-24 text-center"
+      className="px-6 py-24 text-center scroll-mt-28"
       style={{ background: 'linear-gradient(160deg, #1A0E30 0%, #2D1B69 100%)' }}
     >
       <div className="max-w-xl mx-auto">

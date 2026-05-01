@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 
 const steps = [
   {
@@ -27,7 +26,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="bg-kido-bg-soft px-6 py-24">
+    <section id="how-it-works" className="bg-kido-bg-soft px-6 py-24 scroll-mt-28">
       <div className="max-w-5xl mx-auto">
 
         <div className="text-center mb-16">
@@ -40,21 +39,21 @@ export default function HowItWorks() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-          {steps.map((step, index) => (
+          {steps.map((step) => (
             <React.Fragment key={step.number}>
               <div className="flex flex-col items-center text-center">
                 {/* Phone mockup */}
                 <div className="mb-6 relative">
-                  <Image
+                  {/* <Image
                     src="/phone-placeholder.svg"
                     alt={`Kido app screen — ${step.title}`}
                     width={120}
                     height={220}
                     className="drop-shadow-sm"
-                  />
-                  <div className="absolute -bottom-3 -right-3 w-10 h-10 bg-kido-purple rounded-full flex items-center justify-center text-lg shadow-lg">
+                  /> */}
+                  {/* <div className="absolute -bottom-3 -right-3 w-10 h-10 bg-kido-purple rounded-full flex items-center justify-center text-lg shadow-lg">
                     {step.emoji}
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className="text-xs font-bold text-kido-purple-muted uppercase tracking-widest mb-1">

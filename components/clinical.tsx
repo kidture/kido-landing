@@ -1,6 +1,6 @@
 export default function Clinical() {
   return (
-    <section className="bg-kido-bg-soft px-6 py-24">
+    <section id="clinical" className="bg-kido-bg-soft px-6 py-24 scroll-mt-28">
       <div className="max-w-2xl mx-auto">
 
         <div className="text-center mb-12">
@@ -15,7 +15,7 @@ export default function Clinical() {
         {/* Quote block */}
         <div className="bg-kido-navy rounded-2xl px-8 py-8 mb-4">
           <div className="text-4xl text-kido-coral font-black leading-none mb-4" style={{ fontFamily: 'Georgia, serif' }}>
-            "
+            &quot;
           </div>
           <p className="text-base font-medium text-kido-off-white leading-relaxed mb-6">
             For parents this provides a lot of peace. You have all the information captured in
