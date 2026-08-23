@@ -5,8 +5,8 @@ export default function Terms() {
       <p className="text-kido-muted leading-relaxed">
         Our terms of use are being finalised ahead of beta launch. If you have questions,
         contact us at{' '}
-        <a href="mailto:hello@kido.health" className="text-kido-purple underline">
-          hello@kido.health
+        <a href="mailto:hello@kidture.health" className="text-kido-purple underline">
+          hello@kidture.health
         </a>
         .
       </p>

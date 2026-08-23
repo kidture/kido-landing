@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 function getMetadataBaseUrl(): URL {
   const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  const fallback = "https://kido.health";
+  const fallback = "https://kidture.health";
 
   if (!rawSiteUrl) {
     return new URL(fallback);
@@ -34,9 +34,9 @@ function getMetadataBaseUrl(): URL {
 
 const metadataBaseUrl = getMetadataBaseUrl();
 const siteUrl = metadataBaseUrl.toString().replace(/\/$/, "");
-const pageTitle = "Kido Health - Turn Family Observations Into Clinical Signals";
+const pageTitle = "Kidture - Turn Family Observations Into Clinical Signals";
 const pageDescription =
-  "Kido helps families capture daily pediatric health observations and turns them into structured insights care teams can act on.";
+  "Kidture helps families capture daily pediatric health observations and turns them into structured insights care teams can act on.";
 
 export const metadata: Metadata = {
   metadataBase: metadataBaseUrl,
@@ -54,13 +54,13 @@ export const metadata: Metadata = {
     description: pageDescription,
     type: "website",
     url: siteUrl,
-    siteName: "Kido Health",
+    siteName: "Kidture",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Kido Health preview card",
+        alt: "Kidture preview card",
       },
     ],
   },

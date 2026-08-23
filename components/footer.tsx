@@ -11,7 +11,7 @@ export default function Footer() {
           <Link href="/" className="flex items-center gap-0.5">
             <Image
               src="/kido-logo.png"
-              alt="Kido logo"
+              alt="Kidture logo"
               width={100}
               height={40}
               className="h-10 w-auto scale-[1.9] origin-left"
@@ -37,7 +37,7 @@ export default function Footer() {
 
         {/* Bottom row */}
         <div className="border-t border-white/5 pt-6 flex flex-wrap justify-between items-center gap-3">
-          <p className="text-xs text-gray-600">© 2026 Kido Health Ltd. · Patent Pending</p>
+          <p className="text-xs text-gray-600">© 2026 Kidture Health · Patent Pending</p>
           <p className="text-xs text-gray-600">Built for families. Built with clinicians.</p>
         </div>
 
