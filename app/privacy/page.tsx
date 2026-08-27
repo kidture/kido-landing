@@ -5,9 +5,9 @@ export const metadata = {
 export default function Privacy() {
   return (
     <main className="max-w-2xl mx-auto px-6 py-24">
-      <h1 className="text-3xl font-black text-kido-navy mb-2">Privacy Policy</h1>
-      <p className="text-sm text-kido-muted mb-1">Effective date: August 22, 2026</p>
-      <p className="text-sm text-kido-muted mb-10">
+      <h1 className="text-3xl font-black text-kt-ink mb-2">Privacy Policy</h1>
+      <p className="text-sm text-kt-signpost mb-1">Effective date: August 22, 2026</p>
+      <p className="text-sm text-kt-signpost mb-10">
         Interim policy, published for TestFlight beta testing. A more detailed policy will
         replace this one before general availability.
       </p>
@@ -15,7 +15,7 @@ export default function Privacy() {
       <Section title="Who we are">
         <p>
           Kidture (&ldquo;Kidture,&rdquo; &ldquo;we,&rdquo; &ldquo;us&rdquo;) is a service of{' '}
-          <strong className="text-kido-navy">Kidture Health</strong>, a Delaware C-Corporation
+          <strong className="text-kt-ink">Kidture Health</strong>, a Delaware C-Corporation
           based in New Castle, DE. Kidture makes the Kidture app, which helps parents and
           caregivers track their child&rsquo;s health, development, and daily wellbeing. Kidture
           is not a medical device and is not intended to diagnose, treat, cure, or prevent any
@@ -23,9 +23,9 @@ export default function Privacy() {
           professional.
         </p>
         <p className="mt-4">
-          <strong className="text-kido-navy">UK representative:</strong> For users in the United
+          <strong className="text-kt-ink">UK representative:</strong> For users in the United
           Kingdom, our Article 27 UK GDPR representative is Kadambi Muralidharan. Contact them via{' '}
-          <a href="mailto:privacy@kidture.health" className="text-kido-purple underline">
+          <a href="mailto:privacy@kidture.health" className="text-kt-teal underline">
             privacy@kidture.health
           </a>
           .
@@ -36,21 +36,21 @@ export default function Privacy() {
         <p>When you use Kidture, we may collect:</p>
         <ul className="list-disc pl-5 mt-3 space-y-2">
           <li>
-            <strong className="text-kido-navy">Account information</strong>: name, email address,
+            <strong className="text-kt-ink">Account information</strong>: name, email address,
             and login credentials.
           </li>
           <li>
-            <strong className="text-kido-navy">Child profile information</strong>: name, date of
+            <strong className="text-kt-ink">Child profile information</strong>: name, date of
             birth, and information you choose to add about your child (e.g., growth, symptoms,
             medications, allergies, developmental milestones, moods, and notes).
           </li>
           <li>
-            <strong className="text-kido-navy">Content you provide</strong>: text, voice
+            <strong className="text-kt-ink">Content you provide</strong>: text, voice
             recordings and their transcripts, and photos you submit while logging entries or
             talking with the app.
           </li>
           <li>
-            <strong className="text-kido-navy">Usage data</strong>: how you interact with the
+            <strong className="text-kt-ink">Usage data</strong>: how you interact with the
             app, device type, and app version, used to keep the app working and to improve it.
           </li>
         </ul>
@@ -70,7 +70,7 @@ export default function Privacy() {
             to return a response to you and does not use it to train their models. See{' '}
             <a
               href="https://www.anthropic.com/legal/privacy"
-              className="text-kido-purple underline"
+              className="text-kt-teal underline"
             >
               anthropic.com/legal/privacy
             </a>{' '}
@@ -83,7 +83,7 @@ export default function Privacy() {
 
       <Section title="Children's data">
         <p>
-          Kidture is designed for use <strong className="text-kido-navy">by parents and
+          Kidture is designed for use <strong className="text-kt-ink">by parents and
           caregivers</strong>, not by children directly. Information about your child is
           provided by you, the account holder, and is treated as sensitive personal data. We do
           not knowingly allow children to create their own accounts or interact directly with the
@@ -108,7 +108,7 @@ export default function Privacy() {
         </ul>
         <p className="mt-4">
           To exercise any of these rights, contact us at{' '}
-          <a href="mailto:privacy@kidture.health" className="text-kido-purple underline">
+          <a href="mailto:privacy@kidture.health" className="text-kt-teal underline">
             privacy@kidture.health
           </a>
           .
@@ -133,7 +133,7 @@ export default function Privacy() {
       <Section title="Contact us">
         <p>
           Questions about this policy or your data:{' '}
-          <a href="mailto:privacy@kidture.health" className="text-kido-purple underline">
+          <a href="mailto:privacy@kidture.health" className="text-kt-teal underline">
             privacy@kidture.health
           </a>
         </p>
@@ -145,8 +145,8 @@ export default function Privacy() {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="mb-10">
-      <h2 className="text-lg font-bold text-kido-navy mb-3">{title}</h2>
-      <div className="text-kido-muted leading-relaxed">{children}</div>
+      <h2 className="text-lg font-bold text-kt-ink mb-3">{title}</h2>
+      <div className="text-kt-signpost leading-relaxed">{children}</div>
     </section>
   )
 }

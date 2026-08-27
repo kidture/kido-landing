@@ -1,5 +1,6 @@
 import Nav from '@/components/nav'
 import Hero from '@/components/hero'
+import ProofStrip from '@/components/proof-strip'
 import Burden from '@/components/burden'
 import Answer from '@/components/answer'
 import HowItWorks from '@/components/how-it-works'
@@ -13,6 +14,7 @@ export default function Home() {
     <main>
       <Nav />
       <Hero />
+      <ProofStrip />
       <Burden />
       <Answer />
       <HowItWorks />

@@ -24,14 +24,14 @@ export default function Nav() {
     () =>
       `sticky top-0 z-50 border-b transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/90 backdrop-blur-xl border-kido-purple-border-light shadow-[0_8px_30px_rgba(26,14,48,0.08)]'
-          : 'bg-white/95 backdrop-blur border-gray-100'
+          ? 'bg-kt-charcoal/95 backdrop-blur-xl border-kt-cream/10 shadow-lift'
+          : 'bg-kt-charcoal border-transparent'
       }`,
     [isScrolled]
   )
 
   useEffect(() => {
-    function syncNavigationState() {
+    const syncNavigationState = () => {
       const y = window.scrollY
       setIsScrolled(y > 24)
 
@@ -73,36 +73,42 @@ export default function Nav() {
   return (
     <>
       <nav className={navClass}>
-        <div className="h-[2px] bg-kido-purple/10">
+        <div className="h-[2px] bg-kt-cream/10">
           <div
-            className="h-full bg-kido-purple transition-[width] duration-150"
+            className="h-full bg-kt-teal transition-[width] duration-150"
             style={{ width: `${scrollProgress}%` }}
             aria-hidden="true"
           />
         </div>
-        <div className={`max-w-6xl mx-auto px-6 flex items-center justify-between transition-all duration-300 ${isScrolled ? 'py-3' : 'py-4'}`}>
-          <a href="#" className="flex items-center gap-0.5" aria-label="Kido home">
+        <div
+          className={`mx-auto flex max-w-page items-center justify-between px-6 transition-all duration-300 ${
+            isScrolled ? 'py-3' : 'py-3.5'
+          }`}
+        >
+          <a href="#" className="flex items-center" aria-label="Kidture home">
             <Image
-              src="/kido-logo.png"
-              alt="Kido logo"
-              width={110}
-              height={44}
-              className={`w-auto origin-left transition-all duration-300 ${isScrolled ? 'h-9 scale-[1.9]' : 'h-11 scale-[2.1]'}`}
+              src="/brand/wordmark-nav-white.png"
+              alt="Kidture"
+              width={140}
+              height={36}
+              className={`w-auto origin-left transition-all duration-300 ${
+                isScrolled ? 'h-7' : 'h-8'
+              }`}
               priority
             />
           </a>
 
-          <div className="hidden sm:flex items-center gap-2">
+          <div className="hidden items-center gap-1 sm:flex">
             {NAV_ITEMS.map((item) => {
               const isActive = activeHref === item.href
               return (
                 <a
                   key={item.href}
                   href={item.href}
-                  className={`text-sm font-medium px-3 py-2 rounded-full transition-all ${
+                  className={`rounded-full px-3 py-2 text-sm font-medium transition-colors ${
                     isActive
-                      ? 'text-kido-navy bg-kido-purple-tint'
-                      : 'text-kido-muted hover:text-kido-navy hover:bg-kido-purple-tint/70'
+                      ? 'bg-kt-cream/12 text-kt-fog'
+                      : 'text-kt-mist hover:bg-kt-cream/8 hover:text-kt-fog'
                   }`}
                 >
                   {item.label}
@@ -111,7 +117,7 @@ export default function Nav() {
             })}
             <a
               href="#waitlist"
-              className="ml-2 bg-kido-purple text-white text-sm font-bold px-5 py-2.5 rounded-pill hover:bg-purple-700 transition-colors"
+              className="ml-2 rounded-control bg-kt-teal px-5 py-2.5 text-sm font-semibold text-kt-cream shadow-glow transition-colors hover:bg-kt-olive-teal"
             >
               Join waitlist
             </a>
@@ -119,7 +125,7 @@ export default function Nav() {
 
           <button
             type="button"
-            className="sm:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-kido-purple-border text-kido-navy"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-kt-cream/20 text-kt-fog sm:hidden"
             aria-expanded={isMenuOpen}
             aria-label="Toggle navigation menu"
             onClick={() => setIsMenuOpen((prev) => !prev)}
@@ -130,17 +136,17 @@ export default function Nav() {
       </nav>
 
       {isMenuOpen && (
-        <div className="sm:hidden fixed inset-0 z-40 bg-kido-navy/35 backdrop-blur-[2px] px-6 pt-24 pb-6">
-          <div className="bg-white rounded-2xl border border-kido-purple-border-light shadow-xl p-4 space-y-2">
+        <div className="fixed inset-0 z-40 bg-kt-charcoal/70 px-6 pb-6 pt-24 backdrop-blur-[2px] sm:hidden">
+          <div className="space-y-2 rounded-card border border-kt-cream/10 bg-kt-charcoal-mid p-4 shadow-lift">
             {NAV_ITEMS.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsMenuOpen(false)}
-                className={`block rounded-xl px-4 py-3 text-sm font-semibold transition-colors ${
+                className={`block rounded-control px-4 py-3 text-sm font-semibold transition-colors ${
                   activeHref === item.href
-                    ? 'bg-kido-purple-tint text-kido-navy'
-                    : 'text-kido-muted hover:bg-kido-purple-tint/60 hover:text-kido-navy'
+                    ? 'bg-kt-cream/12 text-kt-fog'
+                    : 'text-kt-mist hover:bg-kt-cream/8 hover:text-kt-fog'
                 }`}
               >
                 {item.label}
@@ -149,7 +155,7 @@ export default function Nav() {
             <a
               href="#waitlist"
               onClick={() => setIsMenuOpen(false)}
-              className="mt-2 block text-center bg-kido-purple text-white text-sm font-bold px-5 py-3 rounded-xl hover:bg-purple-700 transition-colors"
+              className="mt-2 block rounded-control bg-kt-teal px-5 py-3 text-center text-sm font-semibold text-kt-cream transition-colors hover:bg-kt-olive-teal"
             >
               Join waitlist
             </a>

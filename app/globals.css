@@ -8,62 +8,74 @@
   }
 
   body {
-    @apply bg-white text-kido-navy font-sans antialiased;
+    @apply bg-kt-cream text-kt-ink font-sans antialiased;
+  }
+
+  ::selection {
+    background: rgba(63, 169, 160, 0.28);
+    color: #0e0b20;
+  }
+
+  :focus-visible {
+    outline: 2px solid #3fa9a0;
+    outline-offset: 3px;
   }
 }
 
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
-.animate-pulse-dot {
-  animation: pulse-dot 2s ease-in-out infinite;
+  50% { opacity: 0.45; }
 }
 
 @keyframes float-slow {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
-@keyframes glow-breathe {
-  0%, 100% {
-    opacity: 0.45;
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
   }
-  50% {
-    opacity: 0.75;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @layer utilities {
-  .bg-kido-mesh {
+  .bg-kt-canvas {
     background:
-      radial-gradient(circle at 20% 18%, rgba(124, 58, 237, 0.2), transparent 36%),
-      radial-gradient(circle at 78% 30%, rgba(232, 120, 74, 0.16), transparent 32%),
-      radial-gradient(circle at 50% 78%, rgba(26, 14, 48, 0.12), transparent 42%),
-      linear-gradient(180deg, #fafbff 0%, #f4f1ff 52%, #ffffff 100%);
+      radial-gradient(ellipse 70% 50% at 12% 8%, rgba(63, 169, 160, 0.12), transparent 55%),
+      radial-gradient(ellipse 55% 45% at 88% 18%, rgba(244, 132, 95, 0.08), transparent 50%),
+      linear-gradient(180deg, #fff8f0 0%, #faf6f0 48%, #f7f3eb 100%);
   }
 
-  .kido-noise::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.34) 0.4px, transparent 0.4px);
-    background-size: 3px 3px;
-    opacity: 0.18;
-    mix-blend-mode: soft-light;
+  .bg-kt-charcoal-mesh {
+    background:
+      radial-gradient(ellipse 60% 50% at 15% 20%, rgba(63, 169, 160, 0.16), transparent 55%),
+      radial-gradient(ellipse 50% 40% at 90% 80%, rgba(92, 143, 134, 0.12), transparent 50%),
+      linear-gradient(165deg, #121010 0%, #151318 55%, #101012 100%);
+  }
+
+  .animate-pulse-dot {
+    animation: pulse-dot 2.2s ease-in-out infinite;
   }
 
   .animate-float-slow {
     animation: float-slow 7s ease-in-out infinite;
   }
 
-  .animate-glow-breathe {
-    animation: glow-breathe 6s ease-in-out infinite;
+  .animate-reveal {
+    animation: reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-pulse-dot,
+    .animate-float-slow,
+    .animate-reveal,
+    .animate-glow-breathe {
+      animation: none !important;
+    }
   }
 }

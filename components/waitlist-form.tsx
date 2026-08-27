@@ -48,7 +48,7 @@ export default function WaitlistForm() {
   }, [])
 
   useEffect(() => {
-    function handleOutsideClick(event: MouseEvent) {
+    const handleOutsideClick = (event: MouseEvent) => {
       if (!countryMenuRef.current) return
       if (!countryMenuRef.current.contains(event.target as Node)) {
         setIsCountryOpen(false)
@@ -59,7 +59,7 @@ export default function WaitlistForm() {
     return () => document.removeEventListener('mousedown', handleOutsideClick)
   }, [])
 
-  async function handleSubmit(e: React.FormEvent) {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email || state === 'loading') return
 
@@ -79,134 +79,168 @@ export default function WaitlistForm() {
   }
 
   return (
-    <section
-      id="waitlist"
-      className="relative overflow-hidden px-6 py-24 text-center scroll-mt-28"
-      style={{ background: 'linear-gradient(160deg, #1A0E30 0%, #2D1B69 58%, #251550 100%)' }}
-    >
-      <div className="pointer-events-none absolute -left-24 top-0 h-72 w-72 rounded-full bg-kido-purple/25 blur-3xl animate-glow-breathe" />
-      <div className="pointer-events-none absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-kido-coral/20 blur-3xl animate-glow-breathe" />
-      <div className="max-w-3xl mx-auto relative">
-        <div className="rounded-3xl border border-white/15 bg-white/[0.05] backdrop-blur-md px-5 py-10 sm:px-8 shadow-[0_22px_55px_rgba(5,2,16,0.45)]">
-
-        <p className="text-xs font-bold text-kido-purple-muted uppercase tracking-[0.2em] mb-5">
-          Beta launching Summer 2026
-        </p>
-
-        <h2 className="text-3xl sm:text-4xl font-black text-kido-off-white leading-tight tracking-tight mb-4">
-          Be the first to give your child&apos;s health story a home.
-        </h2>
-
-        <p className="text-sm text-kido-purple-muted leading-relaxed mb-10">
-          Early access families will shape the product. Limited spots.
-        </p>
-
-        {state === 'success' ? (
-          <div className="bg-emerald-500/20 border border-emerald-500/30 rounded-xl px-6 py-5 text-emerald-300 font-semibold text-sm mb-4">
-            You&apos;re on the list. We&apos;ll be in touch before beta opens. 🎉
-          </div>
-        ) : (
-          <form
-            onSubmit={handleSubmit}
-            className="grid grid-cols-1 gap-3 mb-4 sm:grid-cols-2 md:grid-cols-[minmax(0,1fr)_12rem_auto] md:items-stretch"
-          >
-            <input
-              type="email"
-              required
-              placeholder="your@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="h-12 bg-white/[0.08] border border-white/20 rounded-xl px-4 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-white/40 transition-colors min-w-0"
-            />
-            <div className="relative" ref={countryMenuRef}>
-              <button
-                type="button"
-                aria-haspopup="listbox"
-                aria-expanded={isCountryOpen}
-                aria-label="Country"
-                onClick={() => setIsCountryOpen((prev) => !prev)}
-                className="w-full h-12 bg-white/[0.08] border border-white/20 rounded-xl px-4 pr-11 text-sm text-white focus:outline-none focus:border-white/40 transition-colors text-left whitespace-nowrap overflow-hidden text-ellipsis"
-              >
-                {COUNTRIES.find((item) => item.code === country)?.label}
-              </button>
-              <svg
-                className={`pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/70 transition-transform ${isCountryOpen ? 'rotate-180' : ''}`}
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              {isCountryOpen && (
-                <div
-                  role="listbox"
-                  className="absolute z-20 mt-2 w-full overflow-hidden rounded-xl border border-white/20 bg-[#26164f] shadow-[0_16px_30px_rgba(0,0,0,0.28)] backdrop-blur"
-                >
-                  {COUNTRIES.map((item) => (
-                    <button
-                      key={item.code}
-                      type="button"
-                      onClick={() => {
-                        setCountry(item.code)
-                        setIsCountryOpen(false)
-                      }}
-                      className="w-full flex items-center justify-between px-4 py-3 text-sm text-white hover:bg-white/10 transition-colors whitespace-nowrap"
-                    >
-                      <span>{item.label}</span>
-                      {country === item.code && (
-                        <svg
-                          className="w-4 h-4 text-kido-coral"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden="true"
-                        >
-                          <path d="M4.5 10.5L8 14L15.5 6.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      )}
-                    </button>
-                  ))}
-                </div>
-              )}
+    <section id="waitlist" className="scroll-mt-28 bg-kt-charcoal-mesh px-6 py-24 sm:py-28">
+      <div className="relative mx-auto max-w-3xl text-center">
+        <div className="rounded-card border border-kt-cream/10 bg-kt-cream/[0.04] px-5 py-10 shadow-lift backdrop-blur-md sm:px-10">
+          <div className="mb-5 flex flex-wrap items-center justify-center gap-3">
+            <p className="text-sm font-medium text-kt-teal">Launching Soon in</p>
+            <div className="flex items-center gap-2">
+              <img
+                src="/brand/app-store.svg"
+                alt="Download on the App Store"
+                width={120}
+                height={40}
+                className="h-10 w-auto"
+              />
+              <img
+                src="/brand/google-play.png"
+                alt="Get it on Google Play"
+                width={135}
+                height={40}
+                className="h-[58px] w-auto -my-2"
+              />
             </div>
-            <button
-              type="submit"
-              disabled={state === 'loading'}
-              className="h-12 sm:col-span-2 md:col-span-1 bg-kido-coral text-white font-bold px-6 rounded-xl text-sm shadow-[0_8px_22px_rgba(232,120,74,0.4)] hover:bg-orange-500 disabled:opacity-60 transition-colors whitespace-nowrap"
-            >
-              {state === 'loading' ? 'Sending…' : 'Get early access →'}
-            </button>
-          </form>
-        )}
-
-        {state === 'error' && (
-          <p className="text-red-400 text-xs mb-4">Something went wrong — please try again.</p>
-        )}
-
-        <p className="text-xs text-white/30 mb-6">No spam. We&apos;ll reach out when beta opens.</p>
-
-        {/* Social proof avatars */}
-        <div className="flex justify-center items-center gap-3 pb-1">
-          <div className="flex">
-            {[
-              { color: 'bg-kido-purple', initial: 'A' },
-              { color: 'bg-kido-coral', initial: 'S' },
-              { color: 'bg-kido-purple-muted', initial: 'E' },
-            ].map((avatar, i) => (
-              <div
-                key={avatar.initial}
-                className={`w-7 h-7 ${avatar.color} rounded-full border border-white/25 ${i > 0 ? '-ml-2' : ''} text-[10px] font-bold text-white flex items-center justify-center`}
-                aria-hidden="true"
-              >
-                {avatar.initial}
-              </div>
-            ))}
           </div>
-          <p className="text-xs text-white/40">Join families already on the list</p>
-        </div>
-        </div>
 
+          <h2 className="text-3xl font-bold tracking-[-0.03em] leading-tight text-kt-fog sm:text-4xl">
+            Be the first to give your child&apos;s health story a home.
+          </h2>
+
+          <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-kt-mist">
+            Early access families will shape the product. Limited spots.
+          </p>
+
+          {state === 'success' ? (
+            <div className="mt-8 rounded-control border border-kt-sage/40 bg-kt-sage/15 px-6 py-5 text-sm font-semibold text-kt-sage">
+              You&apos;re on the list. We&apos;ll be in touch before beta opens.
+            </div>
+          ) : (
+            <form
+              onSubmit={handleSubmit}
+              className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-[minmax(0,1fr)_12rem_auto] md:items-stretch"
+            >
+              <div className="text-left">
+                <label htmlFor="waitlist-email" className="mb-1.5 block text-xs font-medium text-kt-mist">
+                  Email
+                </label>
+                <input
+                  id="waitlist-email"
+                  type="email"
+                  required
+                  placeholder="your@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="h-12 w-full min-w-0 rounded-control border border-kt-cream/20 bg-kt-cream/[0.08] px-4 text-sm text-kt-cream placeholder:text-kt-cream/35 transition-colors focus:border-kt-teal focus:outline-none"
+                />
+              </div>
+              <div className="relative text-left" ref={countryMenuRef}>
+                <span className="mb-1.5 block text-xs font-medium text-kt-mist">Country</span>
+                <div className="relative">
+                  <button
+                    type="button"
+                    aria-haspopup="listbox"
+                    aria-expanded={isCountryOpen}
+                    aria-label="Country"
+                    onClick={() => setIsCountryOpen((prev) => !prev)}
+                    className="h-12 w-full overflow-hidden text-ellipsis whitespace-nowrap rounded-control border border-kt-cream/20 bg-kt-cream/[0.08] px-4 pr-11 text-left text-sm text-kt-cream transition-colors focus:border-kt-teal focus:outline-none"
+                  >
+                    {COUNTRIES.find((item) => item.code === country)?.label}
+                  </button>
+                  <svg
+                    className={`pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-kt-cream/70 transition-transform ${
+                      isCountryOpen ? 'rotate-180' : ''
+                    }`}
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M5 7.5L10 12.5L15 7.5"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+                {isCountryOpen && (
+                  <div
+                    role="listbox"
+                    className="absolute z-20 mt-2 w-full overflow-hidden rounded-control border border-kt-cream/15 bg-kt-charcoal-mid shadow-lift"
+                  >
+                    {COUNTRIES.map((item) => (
+                      <button
+                        key={item.code}
+                        type="button"
+                        onClick={() => {
+                          setCountry(item.code)
+                          setIsCountryOpen(false)
+                        }}
+                        className="flex w-full items-center justify-between whitespace-nowrap px-4 py-3 text-sm text-kt-cream transition-colors hover:bg-kt-cream/10"
+                      >
+                        <span>{item.label}</span>
+                        {country === item.code && (
+                          <svg
+                            className="h-4 w-4 text-kt-teal"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M4.5 10.5L8 14L15.5 6.5"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="flex flex-col justify-end sm:col-span-2 md:col-span-1">
+                <button
+                  type="submit"
+                  disabled={state === 'loading'}
+                  className="h-12 whitespace-nowrap rounded-control bg-kt-teal px-6 text-sm font-semibold text-kt-cream shadow-glow transition-colors hover:bg-kt-olive-teal disabled:opacity-60 active:scale-[0.98]"
+                >
+                  {state === 'loading' ? 'Sending…' : 'Get early access'}
+                </button>
+              </div>
+            </form>
+          )}
+
+          {state === 'error' && (
+            <p className="mt-4 text-xs text-kt-coral">Something went wrong. Please try again.</p>
+          )}
+
+          <p className="mt-6 text-xs text-kt-cream/35">No spam. We&apos;ll reach out when beta opens.</p>
+
+          <div className="mt-6 flex items-center justify-center gap-3">
+            <div className="flex">
+              {[
+                { color: 'bg-kt-violet', initial: 'A' },
+                { color: 'bg-kt-rose', initial: 'S' },
+                { color: 'bg-kt-blue', initial: 'E' },
+              ].map((avatar, i) => (
+                <div
+                  key={avatar.initial}
+                  className={`flex h-7 w-7 items-center justify-center rounded-full border border-kt-cream/25 text-[10px] font-bold text-kt-cream ${avatar.color} ${
+                    i > 0 ? '-ml-2' : ''
+                  }`}
+                  aria-hidden="true"
+                >
+                  {avatar.initial}
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-kt-cream/45">Join families already on the list</p>
+          </div>
+        </div>
       </div>
     </section>
   )

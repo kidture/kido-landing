@@ -3,31 +3,29 @@ import Link from 'next/link'
 
 export default function Footer() {
   return (
-    <footer className="bg-kido-near-black px-6 py-10">
-      <div className="max-w-5xl mx-auto">
-
-        {/* Top row */}
-        <div className="flex flex-wrap justify-between items-center gap-6 mb-6">
-          <Link href="/" className="flex items-center gap-0.5">
+    <footer className="bg-kt-charcoal px-6 py-12">
+      <div className="mx-auto max-w-page">
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-6">
+          <Link href="/" className="flex items-center" aria-label="Kidture home">
             <Image
-              src="/kido-logo.png"
-              alt="Kidture logo"
-              width={100}
-              height={40}
-              className="h-10 w-auto scale-[1.9] origin-left"
+              src="/brand/wordmark-nav-white.png"
+              alt="Kidture"
+              width={120}
+              height={32}
+              className="h-7 w-auto"
             />
           </Link>
-          <nav className="flex flex-wrap gap-6">
+          <nav className="flex flex-wrap gap-6" aria-label="Footer">
             {[
               { label: 'How it works', href: '#how-it-works' },
-              { label: 'Our story', href: '#our-story' },
+              { label: 'For families', href: '#families' },
               { label: 'Privacy', href: '/privacy' },
               { label: 'Terms', href: '/terms' },
             ].map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="text-xs text-gray-500 hover:text-gray-400 transition-colors font-medium"
+                className="text-xs font-medium text-kt-mist transition-colors hover:text-kt-fog"
               >
                 {link.label}
               </a>
@@ -35,12 +33,10 @@ export default function Footer() {
           </nav>
         </div>
 
-        {/* Bottom row */}
-        <div className="border-t border-white/5 pt-6 flex flex-wrap justify-between items-center gap-3">
-          <p className="text-xs text-gray-600">© 2026 Kidture Health · Patent Pending</p>
-          <p className="text-xs text-gray-600">Built for families. Built with clinicians.</p>
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-kt-cream/10 pt-6">
+          <p className="text-xs text-kt-cream/40">© 2026 Kidture Health · Patent Pending</p>
+          <p className="text-xs text-kt-cream/40">Built for families. Built with clinicians.</p>
         </div>
-
       </div>
     </footer>
   )

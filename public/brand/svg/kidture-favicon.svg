@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0.00 0.00 1024.00 1024.00" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Kidture favicon</title>
+  <desc id="desc">Compact app icon for small sizes</desc>
+  <rect width="1024" height="1024" fill="#FFF8F0"/>
+  <g transform="translate(147.80 796.01) scale(0.81146 -0.81146)" >
+    <path fill="#0E0B20" d="M45 0V700H185.00V429.26L434.52 700H606.82L308.92 382.24L614.68 0H442.02L185.00 317.56V0Z"/>
+  </g>
+  <circle fill="#3FA9A0" cx="753.30" cy="709.63" r="86.38"/>
+
+</svg>
