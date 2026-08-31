@@ -57,10 +57,10 @@ export const metadata: Metadata = {
     siteName: 'Kidture',
     images: [
       {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Kidture preview card',
+        url: '/brand/png/icon-1024.png',
+        width: 1024,
+        height: 1024,
+        alt: 'Kidture app icon',
       },
     ],
   },
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: pageTitle,
     description: pageDescription,
-    images: ['/og-image.png'],
+    images: ['/brand/png/icon-1024.png'],
   },
 }
 
