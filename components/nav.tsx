@@ -123,15 +123,23 @@ export default function Nav() {
             </a>
           </div>
 
-          <button
-            type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-kt-cream/20 text-kt-fog sm:hidden"
-            aria-expanded={isMenuOpen}
-            aria-label="Toggle navigation menu"
-            onClick={() => setIsMenuOpen((prev) => !prev)}
-          >
-            <span className="text-lg leading-none">{isMenuOpen ? '×' : '☰'}</span>
-          </button>
+          <div className="flex items-center gap-2 sm:hidden">
+            <a
+              href="#waitlist"
+              className="rounded-control bg-kt-teal px-4 py-2 text-sm font-semibold text-kt-cream shadow-glow transition-colors hover:bg-kt-olive-teal"
+            >
+              Join
+            </a>
+            <button
+              type="button"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-kt-cream/20 text-kt-fog"
+              aria-expanded={isMenuOpen}
+              aria-label="Toggle navigation menu"
+              onClick={() => setIsMenuOpen((prev) => !prev)}
+            >
+              <span className="text-lg leading-none">{isMenuOpen ? '×' : '☰'}</span>
+            </button>
+          </div>
         </div>
       </nav>
 
