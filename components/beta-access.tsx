@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { type FormEvent, useEffect, useId, useRef, useState, useSyncExternalStore } from 'react'
 import { type BetaPlatform, getSuggestedPlatform } from '@/lib/beta-platform'
 
@@ -22,28 +23,17 @@ function getServerSuggestedPlatform(): BetaPlatform {
   return 'other'
 }
 
-function PlatformIcon({ platform }: { platform: Exclude<BetaPlatform, 'other'> }) {
-  if (platform === 'ios') {
-    return (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-6 w-6">
-        <path
-          d="M15.8 12.6c0-2.3 1.9-3.5 2-3.6a4.4 4.4 0 0 0-3.5-1.9c-1.5-.2-2.9.9-3.6.9-.7 0-1.8-.9-3-.9C5.4 7.1 3.3 8.5 3.3 11c0 1.1.4 2.3.9 3.4.7 1.5 1.6 3.1 2.9 3.1.6 0 1-.4 1.8-.4.8 0 1.2.4 1.8.4 1.3 0 2.3-1.7 2.9-3.2.5-1.1.7-2.1.7-2.2-.1 0-1.7-.6-1.7-2.5ZM13.4 5.6c1.1-1.3 1-2.5 1-2.7-1 0-2.1.7-2.8 1.5-.7.8-1.1 1.8-1 2.6 1.1.1 2.1-.6 2.8-1.7Z"
-          fill="currentColor"
-        />
-      </svg>
-    )
-  }
-
+function StoreBadge({ platform }: { platform: Exclude<BetaPlatform, 'other'> }) {
+  const isIos = platform === 'ios'
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-6 w-6">
-      <path
-        d="M7.7 8.1 6 5.1m10.3 3L18 5m-9.5 5.2h7A2.5 2.5 0 0 1 18 12.7v4.8A2.5 2.5 0 0 1 15.5 20h-7A2.5 2.5 0 0 1 6 17.5v-4.8a2.5 2.5 0 0 1 2.5-2.5ZM9.5 14.2h.1m4.8 0h.1M10 17h4"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    <Image
+      src={isIos ? '/brand/app-store.svg' : '/brand/google-play.png'}
+      alt=""
+      aria-hidden="true"
+      width={120}
+      height={40}
+      className="h-10 w-auto shrink-0"
+    />
   )
 }
 
@@ -112,7 +102,7 @@ export default function BetaAccess({ testFlightUrl }: Props) {
 
         <section className="mx-auto w-full max-w-3xl px-6 pb-12 pt-12 sm:px-9 sm:pb-20 sm:pt-20">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold text-kt-olive-teal">Kidture beta</p>
+            <p className="text-sm font-semibold text-kt-olive-teal">Kidture Beta Program</p>
             <h1 className="mt-4 text-balance text-4xl font-bold tracking-[-0.05em] text-kt-ink sm:text-5xl">
               Get the beta on the phone you use every day.
             </h1>
@@ -139,9 +129,7 @@ export default function BetaAccess({ testFlightUrl }: Props) {
                       : 'border-kt-ink/10 bg-white hover:border-kt-teal/55 hover:bg-kt-cream-muted'
                   }`}
                 >
-                  <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-control ${selected ? 'bg-kt-teal text-kt-cream' : 'bg-kt-cream-deep text-kt-ink'}`}>
-                    <PlatformIcon platform={option.id} />
-                  </span>
+                  <StoreBadge platform={option.id} />
                   <span>
                     <span className="block text-base font-semibold text-kt-ink">{option.label}</span>
                     <span className="mt-1 block text-sm text-kt-signpost">{option.detail}</span>
@@ -154,9 +142,7 @@ export default function BetaAccess({ testFlightUrl }: Props) {
           {currentPanel === 'ios' && (
             <section className="mt-6 rounded-card border border-kt-teal/35 bg-white p-6 shadow-soft sm:p-8" aria-labelledby="ios-beta-heading">
               <div className="flex items-start gap-4">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-control bg-kt-teal text-kt-cream">
-                  <PlatformIcon platform="ios" />
-                </span>
+                <StoreBadge platform="ios" />
                 <div>
                   <h2 id="ios-beta-heading" className="text-xl font-bold tracking-[-0.025em] text-kt-ink">
                     Install with TestFlight
@@ -184,9 +170,7 @@ export default function BetaAccess({ testFlightUrl }: Props) {
           {currentPanel === 'android' && (
             <section className="mt-6 rounded-card border border-kt-teal/35 bg-white p-6 shadow-soft sm:p-8" aria-labelledby="android-beta-heading">
               <div className="flex items-start gap-4">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-control bg-kt-teal text-kt-cream">
-                  <PlatformIcon platform="android" />
-                </span>
+                <StoreBadge platform="android" />
                 <div>
                   <h2 id="android-beta-heading" className="text-xl font-bold tracking-[-0.025em] text-kt-ink">
                     Request Android access
@@ -249,8 +233,8 @@ export default function BetaAccess({ testFlightUrl }: Props) {
 
           <p className="mt-10 text-sm leading-6 text-kt-signpost">
             Questions about beta access? Email us at{' '}
-            <a href="mailto:hello@kidture.health" className="font-semibold text-kt-olive-teal underline underline-offset-2 hover:text-kt-ink">
-              hello@kidture.health
+            <a href="mailto:support@kidture.health" className="font-semibold text-kt-olive-teal underline underline-offset-2 hover:text-kt-ink">
+              support@kidture.health
             </a>
             . Read our{' '}
             <Link href="/privacy" className="font-semibold text-kt-olive-teal underline underline-offset-2 hover:text-kt-ink">
