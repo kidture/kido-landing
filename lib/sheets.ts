@@ -16,3 +16,26 @@ export async function saveEmail(email: string, country: 'US' | 'UK'): Promise<vo
     throw new Error(`Sheets webhook error ${res.status}: ${body}`)
   }
 }
+
+export async function saveBetaRequest(email: string): Promise<void> {
+  const webhookUrl = process.env.BETA_REQUEST_WEBHOOK_URL
+
+  if (!webhookUrl) {
+    throw new Error('Missing BETA_REQUEST_WEBHOOK_URL environment variable')
+  }
+
+  const res = await fetch(webhookUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      type: 'android_beta_request',
+      email,
+      submittedAt: new Date().toISOString(),
+    }),
+  })
+
+  if (!res.ok) {
+    const body = await res.text()
+    throw new Error(`Beta request webhook error ${res.status}: ${body}`)
+  }
+}
