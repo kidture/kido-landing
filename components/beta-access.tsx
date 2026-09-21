@@ -92,8 +92,15 @@ export default function BetaAccess({ testFlightUrl }: Props) {
     <main className="min-h-screen bg-kt-canvas px-5 py-5 text-kt-ink sm:px-8 sm:py-8">
       <div className="mx-auto flex min-h-[calc(100vh-2.5rem)] max-w-page flex-col rounded-[24px] border border-kt-ink/10 bg-kt-cream shadow-soft sm:min-h-[calc(100vh-4rem)]">
         <header className="flex items-center justify-between px-6 py-5 sm:px-9">
-          <Link href="/" className="text-lg font-bold tracking-[-0.04em] text-kt-ink">
-            Kidture
+          <Link href="/" aria-label="Kidture home" className="inline-flex items-center">
+            <Image
+              src="/brand/svg/kidture-wordmark-nav-ink.svg"
+              alt="Kidture"
+              width={144}
+              height={32}
+              className="h-7 w-auto"
+              priority
+            />
           </Link>
           <Link href="/" className="text-sm font-medium text-kt-signpost transition-colors hover:text-kt-ink">
             Back to site
@@ -123,14 +130,14 @@ export default function BetaAccess({ testFlightUrl }: Props) {
                   type="button"
                   aria-pressed={selected}
                   onClick={() => setChosenPlatform(option.id)}
-                  className={`flex min-h-24 items-center gap-4 rounded-card border p-5 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-kt-teal focus-visible:ring-offset-2 ${
+                  className={`flex min-h-24 flex-col items-start gap-4 rounded-card border p-5 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-kt-teal focus-visible:ring-offset-2 sm:flex-row sm:items-center ${
                     selected
                       ? 'border-kt-teal bg-kt-teal/10 shadow-soft'
                       : 'border-kt-ink/10 bg-white hover:border-kt-teal/55 hover:bg-kt-cream-muted'
                   }`}
                 >
                   <StoreBadge platform={option.id} />
-                  <span>
+                  <span className="min-w-0">
                     <span className="block text-base font-semibold text-kt-ink">{option.label}</span>
                     <span className="mt-1 block text-sm text-kt-signpost">{option.detail}</span>
                   </span>
@@ -141,9 +148,9 @@ export default function BetaAccess({ testFlightUrl }: Props) {
 
           {currentPanel === 'ios' && (
             <section className="mt-6 rounded-card border border-kt-teal/35 bg-white p-6 shadow-soft sm:p-8" aria-labelledby="ios-beta-heading">
-              <div className="flex items-start gap-4">
+              <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-start">
                 <StoreBadge platform="ios" />
-                <div>
+                <div className="min-w-0">
                   <h2 id="ios-beta-heading" className="text-xl font-bold tracking-[-0.025em] text-kt-ink">
                     Install with TestFlight
                   </h2>
@@ -155,7 +162,7 @@ export default function BetaAccess({ testFlightUrl }: Props) {
               {testFlightUrl ? (
                 <a
                   href={testFlightUrl}
-                  className="mt-7 inline-flex min-h-12 items-center justify-center rounded-control bg-kt-teal px-6 text-sm font-semibold text-kt-cream shadow-glow transition-colors hover:bg-kt-olive-teal"
+                  className="mt-7 flex min-h-12 w-full items-center justify-center rounded-control bg-kt-teal px-6 text-sm font-semibold text-kt-cream shadow-glow transition-colors hover:bg-kt-olive-teal sm:inline-flex sm:w-auto"
                 >
                   Open TestFlight
                 </a>
@@ -169,9 +176,9 @@ export default function BetaAccess({ testFlightUrl }: Props) {
 
           {currentPanel === 'android' && (
             <section className="mt-6 rounded-card border border-kt-teal/35 bg-white p-6 shadow-soft sm:p-8" aria-labelledby="android-beta-heading">
-              <div className="flex items-start gap-4">
+              <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-start">
                 <StoreBadge platform="android" />
-                <div>
+                <div className="min-w-0">
                   <h2 id="android-beta-heading" className="text-xl font-bold tracking-[-0.025em] text-kt-ink">
                     Request Android access
                   </h2>
@@ -216,7 +223,7 @@ export default function BetaAccess({ testFlightUrl }: Props) {
                   <button
                     type="submit"
                     disabled={formState === 'loading'}
-                    className="mt-5 inline-flex min-h-12 items-center justify-center rounded-control bg-kt-teal px-6 text-sm font-semibold text-kt-cream shadow-glow transition-colors hover:bg-kt-olive-teal disabled:cursor-not-allowed disabled:opacity-60"
+                    className="mt-5 flex min-h-12 w-full items-center justify-center rounded-control bg-kt-teal px-6 text-sm font-semibold text-kt-cream shadow-glow transition-colors hover:bg-kt-olive-teal disabled:cursor-not-allowed disabled:opacity-60 sm:inline-flex sm:w-auto"
                   >
                     {formState === 'loading' ? 'Requesting access…' : 'Request Android access'}
                   </button>
