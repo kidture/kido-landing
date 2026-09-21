@@ -19,6 +19,8 @@ export default function Dashboard({ initialRequests }: Props) {
   const [status, setStatus] = useState<'all' | BetaRequestStatus>('all')
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
   const [savingIds, setSavingIds] = useState<Set<string>>(new Set())
+  const [bulkStatus, setBulkStatus] = useState<BetaRequestStatus | ''>('')
+  const [bulkSaving, setBulkSaving] = useState(false)
   const [showInvitePreview, setShowInvitePreview] = useState(false)
   const [sending, setSending] = useState(false)
   const [sendResults, setSendResults] = useState<SendResult[] | null>(null)
@@ -42,11 +44,23 @@ export default function Dashboard({ initialRequests }: Props) {
     [requests]
   )
 
+  const allVisibleSelected = visibleRequests.length > 0 && visibleRequests.every((request) => selectedIds.has(request.id))
+
   function toggleSelected(id: string) {
     setSelectedIds((current) => {
       const next = new Set(current)
       if (next.has(id)) next.delete(id)
       else next.add(id)
+      return next
+    })
+    setSendResults(null)
+  }
+
+  function toggleVisibleSelection() {
+    setSelectedIds((current) => {
+      const next = new Set(current)
+      if (allVisibleSelected) visibleRequests.forEach((request) => next.delete(request.id))
+      else visibleRequests.forEach((request) => next.add(request.id))
       return next
     })
     setSendResults(null)
@@ -77,6 +91,49 @@ export default function Dashboard({ initialRequests }: Props) {
         return next
       })
     }
+  }
+
+  async function bulkUpdateStatus() {
+    if (selectedRequests.length < 2 || !bulkStatus) return
+
+    setBulkSaving(true)
+    setNotice('')
+    setSavingIds((current) => new Set([...current, ...selectedRequests.map((request) => request.id)]))
+
+    const results = await Promise.all(selectedRequests.map(async (request) => {
+      try {
+        const response = await fetch(`/api/admin/requests/${encodeURIComponent(request.id)}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: bulkStatus, notes: request.notes }),
+        })
+        const body: unknown = await response.json()
+        if (!response.ok || typeof body !== 'object' || body === null || !('request' in body)) {
+          throw new Error(typeof body === 'object' && body !== null && 'error' in body ? String(body.error) : 'We could not save this request.')
+        }
+        return { updated: body.request as BetaRequest }
+      } catch (error) {
+        return { id: request.id, error: error instanceof Error ? error.message : 'We could not save this request.' }
+      }
+    }))
+
+    const updatedRequests = results.filter((result): result is { updated: BetaRequest } => 'updated' in result).map((result) => result.updated)
+    const updatedIds = new Set(updatedRequests.map((request) => request.id))
+
+    if (updatedRequests.length > 0) {
+      setRequests((current) => current.map((request) => updatedRequests.find((updated) => updated.id === request.id) ?? request))
+      setSelectedIds((current) => new Set([...current].filter((id) => !updatedIds.has(id))))
+    }
+
+    const failed = results.length - updatedRequests.length
+    setNotice(`${countLabel(updatedRequests.length, 'request')} updated.${failed > 0 ? ` ${countLabel(failed, 'request')} could not be updated.` : ''}`)
+    setBulkStatus('')
+    setBulkSaving(false)
+    setSavingIds((current) => {
+      const next = new Set(current)
+      selectedRequests.forEach((request) => next.delete(request.id))
+      return next
+    })
   }
 
   async function sendInvitations() {
@@ -130,7 +187,9 @@ export default function Dashboard({ initialRequests }: Props) {
 
           {notice && <p role="status" className="mt-4 rounded-control border border-kt-ink/10 bg-kt-cream-deep px-4 py-3 text-sm leading-6 text-kt-secondary">{notice}</p>}
 
-          <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"><p className="text-sm text-kt-signpost">{countLabel(visibleRequests.length, 'visible request')} · {countLabel(selectedRequests.length, 'tester selected')}</p><button type="button" onClick={() => { setShowInvitePreview(true); setSendResults(null) }} disabled={selectedRequests.length === 0} className="inline-flex min-h-12 items-center justify-center rounded-control bg-kt-teal px-5 text-sm font-semibold text-kt-cream shadow-glow transition-colors hover:bg-kt-olive-teal disabled:cursor-not-allowed disabled:opacity-60">Review invitations</button></div>
+          <div className="mt-6 flex flex-col gap-4"><div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"><p className="text-sm text-kt-signpost">{countLabel(visibleRequests.length, 'visible request')} · {countLabel(selectedRequests.length, 'tester selected')}</p><div className="flex flex-wrap gap-3"><button type="button" onClick={toggleVisibleSelection} disabled={visibleRequests.length === 0 || bulkSaving} className="inline-flex min-h-12 items-center justify-center rounded-control border border-kt-ink/15 bg-white px-5 text-sm font-semibold text-kt-ink transition-colors hover:bg-kt-cream-muted disabled:cursor-not-allowed disabled:opacity-60">{allVisibleSelected ? 'Clear visible selection' : 'Select all visible'}</button><button type="button" onClick={() => { setShowInvitePreview(true); setSendResults(null) }} disabled={selectedRequests.length === 0 || bulkSaving} className="inline-flex min-h-12 items-center justify-center rounded-control bg-kt-teal px-5 text-sm font-semibold text-kt-cream shadow-glow transition-colors hover:bg-kt-olive-teal disabled:cursor-not-allowed disabled:opacity-60">Review invitations</button></div></div>
+            <section aria-label="Bulk status update" className="flex flex-col gap-3 rounded-card border border-kt-ink/10 bg-white p-4 shadow-soft sm:flex-row sm:items-end sm:justify-between"><label className="block text-sm font-semibold text-kt-ink">Update status for selected testers<select aria-label="Bulk status" value={bulkStatus} onChange={(event) => setBulkStatus(event.target.value as BetaRequestStatus | '')} disabled={bulkSaving} className="mt-2 h-11 w-full min-w-56 rounded-control border border-kt-ink/20 bg-kt-cream px-3 font-normal text-kt-ink focus:border-kt-teal focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"><option value="">Choose a status</option>{BETA_REQUEST_STATUSES.map((item) => <option key={item} value={item}>{item.replaceAll('_', ' ')}</option>)}</select></label><button type="button" onClick={bulkUpdateStatus} disabled={selectedRequests.length < 2 || !bulkStatus || bulkSaving} className="min-h-11 rounded-control border border-kt-ink/15 px-5 text-sm font-semibold text-kt-ink transition-colors hover:bg-kt-cream-muted disabled:cursor-not-allowed disabled:opacity-60">{bulkSaving ? 'Updating…' : 'Update selected'}</button></section>
+          </div>
 
           {showInvitePreview && <InvitationDialog requests={selectedRequests} sending={sending} results={sendResults} onCancel={() => { setShowInvitePreview(false); setSendResults(null) }} onConfirm={sendInvitations} />}
           <div className="mt-6"><RequestTable requests={visibleRequests} selectedIds={selectedIds} savingIds={savingIds} onToggleSelected={toggleSelected} onSave={saveRequest} /></div>

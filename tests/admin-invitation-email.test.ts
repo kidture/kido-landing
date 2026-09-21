@@ -15,3 +15,23 @@ test('renders an Android invitation with recipient and Play opt-in link', () => 
   assert.match(email.html, /https:\/\/play\.google\.com\/apps\/testing\/com\.kidture\.health/)
   assert.match(email.html, /Kidture/)
 })
+
+test('wraps an Android invitation in the Kidture branded email shell', () => {
+  const email = renderAndroidInvitation(
+    'parent@example.com',
+    'https://play.google.com/apps/testing/com.kidture.health'
+  )
+
+  assert.match(email.html, /src="https:\/\/kidture\.health\/brand\/png\/wordmark-ink-h128\.png"/)
+  assert.match(email.html, /background:#ffffff;border-top:3px solid #3FA9A0/)
+  assert.match(email.html, /Kidture &middot; support@kidture\.health/)
+})
+
+test('uses an email-safe wrapper to leave breathing room above the invitation wordmark', () => {
+  const email = renderAndroidInvitation(
+    'parent@example.com',
+    'https://play.google.com/apps/testing/com.kidture.health'
+  )
+
+  assert.match(email.html, /<div style="background:#fff8f0;padding:48px 16px/)
+})

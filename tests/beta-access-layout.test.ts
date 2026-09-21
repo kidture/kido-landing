@@ -17,3 +17,13 @@ test('stacks beta cards and detail headers on phones before using a horizontal l
 test('uses a full-width beta action on phones without changing the desktop action width', () => {
   assert.match(source, /flex\s+min-h-12\s+w-full[\s\S]*?sm:inline-flex\s+sm:w-auto/)
 })
+
+const requestTableSource = readFileSync(new URL('../components/admin/request-table.tsx', import.meta.url), 'utf8')
+
+test('keeps beta-request timing details behind an accessible info control', () => {
+  assert.match(requestTableSource, /aria-label=\{`Show timing details for \$\{request\.email\}`\}/)
+  assert.match(requestTableSource, /bottom-full/)
+  assert.match(requestTableSource, /Requested/)
+  assert.match(requestTableSource, /Play access/)
+  assert.match(requestTableSource, /Invited/)
+})

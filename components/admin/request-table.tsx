@@ -51,6 +51,24 @@ function SelectionControl({ request, checked, onToggle }: { request: BetaRequest
   )
 }
 
+function TimingDetails({ request }: { request: BetaRequest }) {
+  return (
+    <div className="group relative inline-flex">
+      <button type="button" aria-label={`Show timing details for ${request.email}`} className="inline-flex h-8 w-8 items-center justify-center rounded-full text-kt-signpost transition-colors hover:bg-kt-cream-deep hover:text-kt-ink focus:bg-kt-cream-deep focus:text-kt-ink">
+        <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-current stroke-2">
+          <circle cx="12" cy="12" r="8.5" />
+          <path d="M12 10.5v5M12 7.5h.01" strokeLinecap="round" />
+        </svg>
+      </button>
+      <dl role="tooltip" className="invisible absolute bottom-full left-0 z-10 mb-2 w-56 rounded-control border border-kt-ink/10 bg-kt-ink px-4 py-3 text-left text-xs leading-5 text-kt-cream opacity-0 shadow-soft transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+        <div className="flex justify-between gap-4"><dt className="text-kt-cream/70">Requested</dt><dd>{dateLabel(request.submittedAt)}</dd></div>
+        <div className="mt-2 flex justify-between gap-4"><dt className="text-kt-cream/70">Play access</dt><dd>{dateLabel(request.playAccessGrantedAt)}</dd></div>
+        <div className="mt-2 flex justify-between gap-4"><dt className="text-kt-cream/70">Invited</dt><dd>{dateLabel(request.invitationEmailedAt)}</dd></div>
+      </dl>
+    </div>
+  )
+}
+
 export default function RequestTable({ requests, selectedIds, savingIds, onToggleSelected, onSave }: Props) {
   if (requests.length === 0) {
     return <div className="rounded-card border border-dashed border-kt-ink/20 bg-white px-6 py-12 text-center text-sm leading-6 text-kt-secondary">No beta requests match this view.</div>
@@ -58,26 +76,22 @@ export default function RequestTable({ requests, selectedIds, savingIds, onToggl
 
   return (
     <>
-      <div className="hidden overflow-x-auto rounded-card border border-kt-ink/10 bg-white shadow-soft md:block">
-        <table className="min-w-[980px] w-full border-collapse text-left text-sm">
+      <div className="hidden overflow-visible rounded-card border border-kt-ink/10 bg-white shadow-soft md:block">
+        <table className="min-w-[720px] w-full border-collapse text-left text-sm">
           <thead className="bg-kt-cream-deep text-xs uppercase tracking-[0.08em] text-kt-signpost">
             <tr>
-              <th scope="col" className="px-5 py-4 font-semibold">Tester</th>
+              <th scope="col" className="px-5 py-4 font-semibold">Select</th>
+              <th scope="col" className="px-5 py-4 font-semibold">Tester email</th>
               <th scope="col" className="px-5 py-4 font-semibold">Status</th>
-              <th scope="col" className="px-5 py-4 font-semibold">Requested</th>
-              <th scope="col" className="px-5 py-4 font-semibold">Play access</th>
-              <th scope="col" className="px-5 py-4 font-semibold">Invited</th>
               <th scope="col" className="px-5 py-4 font-semibold">Manage</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-kt-ink/10">
             {requests.map((request) => (
               <tr key={request.id} className="align-top">
-                <td className="px-5 py-5"><p className="font-semibold text-kt-ink">{request.email}</p><SelectionControl request={request} checked={selectedIds.has(request.id)} onToggle={() => onToggleSelected(request.id)} /></td>
+                <td className="px-5 py-5"><SelectionControl request={request} checked={selectedIds.has(request.id)} onToggle={() => onToggleSelected(request.id)} /></td>
+                <td className="px-5 py-5"><div className="flex items-center gap-2"><p className="break-all font-semibold text-kt-ink">{request.email}</p><TimingDetails request={request} /></div></td>
                 <td className="px-5 py-5"><StatusBadge status={request.status} /></td>
-                <td className="px-5 py-5 text-kt-secondary">{dateLabel(request.submittedAt)}</td>
-                <td className="px-5 py-5 text-kt-secondary">{dateLabel(request.playAccessGrantedAt)}</td>
-                <td className="px-5 py-5 text-kt-secondary">{dateLabel(request.invitationEmailedAt)}</td>
                 <td className="min-w-[360px] px-5 py-5"><RequestEditor request={request} saving={savingIds.has(request.id)} onSave={(update) => onSave(request.id, update)} /></td>
               </tr>
             ))}
@@ -87,8 +101,7 @@ export default function RequestTable({ requests, selectedIds, savingIds, onToggl
       <div className="grid gap-4 md:hidden">
         {requests.map((request) => (
           <article key={request.id} className="rounded-card border border-kt-ink/10 bg-white p-5 shadow-soft">
-            <div className="flex items-start justify-between gap-4"><div><h3 className="break-all font-semibold text-kt-ink">{request.email}</h3><p className="mt-1 text-sm text-kt-signpost">Requested {dateLabel(request.submittedAt)}</p></div><StatusBadge status={request.status} /></div>
-            <dl className="mt-5 grid grid-cols-2 gap-4 text-sm"><div><dt className="font-semibold text-kt-signpost">Play access</dt><dd className="mt-1 text-kt-secondary">{dateLabel(request.playAccessGrantedAt)}</dd></div><div><dt className="font-semibold text-kt-signpost">Invited</dt><dd className="mt-1 text-kt-secondary">{dateLabel(request.invitationEmailedAt)}</dd></div></dl>
+            <div className="flex items-start justify-between gap-4"><div className="flex items-center gap-2"><h3 className="break-all font-semibold text-kt-ink">{request.email}</h3><TimingDetails request={request} /></div><StatusBadge status={request.status} /></div>
             <div className="mt-4"><SelectionControl request={request} checked={selectedIds.has(request.id)} onToggle={() => onToggleSelected(request.id)} /></div>
             <div className="mt-4 border-t border-kt-ink/10 pt-4"><RequestEditor request={request} saving={savingIds.has(request.id)} onSave={(update) => onSave(request.id, update)} /></div>
           </article>
