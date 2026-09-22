@@ -43,6 +43,10 @@ function isStatus(value: unknown): value is BetaRequestStatus {
   return isString(value) && BETA_REQUEST_STATUSES.includes(value as BetaRequestStatus)
 }
 
+export function parseStatusFilter(value: unknown): 'all' | BetaRequestStatus {
+  return isStatus(value) ? value : 'all'
+}
+
 export function parseBetaRequestRow(value: unknown): BetaRequest | null {
   if (!isRecord(value)) return null
 

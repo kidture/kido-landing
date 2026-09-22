@@ -2,7 +2,7 @@
 
 import { type FormEvent, useEffect, useId, useRef, useState } from 'react'
 
-export default function LoginForm() {
+export default function LoginForm({ destination = '/admin' }: { destination?: string }) {
   const emailId = useId()
   const passwordId = useId()
   const errorRef = useRef<HTMLDivElement>(null)
@@ -36,7 +36,7 @@ export default function LoginForm() {
             : 'We could not sign you in.'
         )
       }
-      window.location.assign('/admin')
+      window.location.assign(destination)
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : 'We could not sign you in.')
       setState('error')

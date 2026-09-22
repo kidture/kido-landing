@@ -1,11 +1,16 @@
 import { redirect } from 'next/navigation'
 import LoginForm from '@/components/admin/login-form'
 import { isAuthenticatedAdmin } from '@/lib/admin/guard'
+import { parseStatusFilter } from '@/lib/admin/requests'
 
 export const metadata = { title: 'Kidture beta administration' }
 
-export default async function AdminLoginPage() {
-  if (await isAuthenticatedAdmin()) redirect('/admin')
+export default async function AdminLoginPage({ searchParams }: {
+  searchParams: Promise<{ status?: string | string[] }>
+}) {
+  const status = parseStatusFilter((await searchParams).status)
+  const destination = status === 'all' ? '/admin' : `/admin?status=${status}`
+  if (await isAuthenticatedAdmin()) redirect(destination)
 
   return (
     <main className="min-h-screen bg-kt-canvas px-5 py-5 text-kt-ink sm:px-8 sm:py-8">
@@ -14,7 +19,7 @@ export default async function AdminLoginPage() {
         <p className="mt-10 text-sm font-semibold text-kt-olive-teal">Private workspace</p>
         <h1 className="mt-3 text-4xl font-bold tracking-[-0.05em]">Beta administration</h1>
         <p className="mt-4 text-base leading-7 text-kt-secondary">Sign in to manage Android beta access. This workspace is for Kidture operations only.</p>
-        <LoginForm />
+        <LoginForm destination={destination} />
       </div>
     </main>
   )

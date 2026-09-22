@@ -1,6 +1,7 @@
 import Dashboard from '@/components/admin/dashboard'
 import { requireAdmin } from '@/lib/admin/guard'
 import { listBetaRequests } from '@/lib/admin/sheets'
+import { parseStatusFilter } from '@/lib/admin/requests'
 
 async function loadRequests() {
   try {
@@ -13,8 +14,11 @@ async function loadRequests() {
 
 export const metadata = { title: 'Kidture beta administration' }
 
-export default async function AdminPage() {
-  await requireAdmin()
+export default async function AdminPage({ searchParams }: {
+  searchParams: Promise<{ status?: string | string[] }>
+}) {
+  const status = parseStatusFilter((await searchParams).status)
+  await requireAdmin(status)
   const { requests, loadError } = await loadRequests()
 
   if (loadError) {

@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { after, NextRequest, NextResponse } from 'next/server'
+import { sendAndroidRequestNotification } from '@/lib/admin/invitation-email'
 import { parseBetaRequest } from '@/lib/beta-request'
 import { saveBetaRequest } from '@/lib/sheets'
 
@@ -17,6 +18,13 @@ export async function POST(req: NextRequest) {
 
   try {
     await saveBetaRequest(request.email)
+    after(async () => {
+      try {
+        await sendAndroidRequestNotification(request.email)
+      } catch (error) {
+        console.error('[beta-requests] Unable to send Android access notification:', error)
+      }
+    })
     return NextResponse.json({ ok: true }, { status: 200 })
   } catch (error) {
     console.error('[beta-requests] Unable to save request:', error)

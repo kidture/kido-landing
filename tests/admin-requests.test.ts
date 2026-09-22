@@ -8,6 +8,16 @@ import {
   parseBetaRequestRow,
   type BetaRequest,
 } from '../lib/admin/requests.ts'
+import * as requests from '../lib/admin/requests.ts'
+
+test('accepts each shareable status filter and falls back to all for invalid queries', () => {
+  for (const status of ['requested', 'play_access_pending', 'play_access_granted', 'invited', 'removed']) {
+    assert.equal(requests.parseStatusFilter(status), status)
+  }
+  for (const value of [undefined, null, '', 'all', 'unknown', ['requested', 'invited']]) {
+    assert.equal(requests.parseStatusFilter(value), 'all')
+  }
+})
 
 function request(overrides: Partial<BetaRequest> = {}): BetaRequest {
   return {

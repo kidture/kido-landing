@@ -1,9 +1,10 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import InvitationDialog from '@/components/admin/invitation-dialog'
 import RequestTable from '@/components/admin/request-table'
-import { BETA_REQUEST_STATUSES, type BetaRequest, type BetaRequestStatus, type RequestUpdate } from '@/lib/admin/requests'
+import { BETA_REQUEST_STATUSES, parseStatusFilter, type BetaRequest, type BetaRequestStatus, type RequestUpdate } from '@/lib/admin/requests'
 
 type Props = { initialRequests: BetaRequest[] }
 
@@ -16,7 +17,8 @@ function countLabel(count: number, singular: string): string {
 export default function Dashboard({ initialRequests }: Props) {
   const [requests, setRequests] = useState(initialRequests)
   const [search, setSearch] = useState('')
-  const [status, setStatus] = useState<'all' | BetaRequestStatus>('all')
+  const searchParams = useSearchParams()
+  const status = parseStatusFilter(searchParams.getAll('status').length > 1 ? null : searchParams.get('status'))
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
   const [savingIds, setSavingIds] = useState<Set<string>>(new Set())
   const [bulkStatus, setBulkStatus] = useState<BetaRequestStatus | ''>('')
@@ -25,6 +27,13 @@ export default function Dashboard({ initialRequests }: Props) {
   const [sending, setSending] = useState(false)
   const [sendResults, setSendResults] = useState<SendResult[] | null>(null)
   const [notice, setNotice] = useState('')
+
+  function setStatus(nextStatus: 'all' | BetaRequestStatus) {
+    const url = new URL(window.location.href)
+    if (nextStatus === 'all') url.searchParams.delete('status')
+    else url.searchParams.set('status', nextStatus)
+    window.history.pushState(null, '', `${url.pathname}${url.search}${url.hash}`)
+  }
 
   const visibleRequests = useMemo(() => {
     const normalizedSearch = search.trim().toLowerCase()
