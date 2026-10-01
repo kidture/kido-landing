@@ -5,7 +5,7 @@ import * as emails from '../lib/admin/invitation-email.ts'
 
 beforeEach((t) => {
   const originalEnv = { ...process.env }
-  t.after(() => { process.env = originalEnv })
+  if ('after' in t) t.after(() => { process.env = originalEnv })
 })
 
 for (const [environment, dashboardUrl] of [

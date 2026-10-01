@@ -2,7 +2,7 @@
 
 import { type FormEvent, useEffect, useId, useRef, useState } from 'react'
 
-export default function LoginForm({ destination = '/admin' }: { destination?: string }) {
+export default function LoginForm({ destination = '/admin/app-usage' }: { destination?: string }) {
   const emailId = useId()
   const passwordId = useId()
   const errorRef = useRef<HTMLDivElement>(null)

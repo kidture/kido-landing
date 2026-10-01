@@ -1,37 +1,31 @@
-import Dashboard from '@/components/admin/dashboard'
-import { requireAdmin } from '@/lib/admin/guard'
-import { listBetaRequests } from '@/lib/admin/sheets'
+import { redirect } from 'next/navigation'
+import LoginForm from '@/components/admin/login-form'
+import { isAuthenticatedAdmin } from '@/lib/admin/guard'
+import { safeAdminDestination } from '@/lib/admin/destination'
 import { parseStatusFilter } from '@/lib/admin/requests'
 
-async function loadRequests() {
-  try {
-    return { requests: await listBetaRequests(), loadError: false }
-  } catch (error) {
-    console.error('[admin page] Unable to load beta requests:', error)
-    return { requests: [], loadError: true }
-  }
-}
-
-export const metadata = { title: 'Kidture beta administration' }
+export const metadata = { title: 'Kidture administration' }
 
 export default async function AdminPage({ searchParams }: {
-  searchParams: Promise<{ status?: string | string[] }>
+  searchParams: Promise<{ next?: string | string[]; status?: string | string[] }>
 }) {
-  const status = parseStatusFilter((await searchParams).status)
-  await requireAdmin(status)
-  const { requests, loadError } = await loadRequests()
-
-  if (loadError) {
-    return (
-      <main className="min-h-screen bg-kt-canvas px-5 py-5 text-kt-ink sm:px-8 sm:py-8">
-        <section className="mx-auto max-w-2xl rounded-card border border-kt-coral/40 bg-kt-cream p-8 shadow-soft">
-          <p className="text-sm font-semibold text-kt-coral">Beta administration</p>
-          <h1 className="mt-3 text-3xl font-bold tracking-[-0.04em]">The request list is not connected yet.</h1>
-          <p className="mt-4 leading-7 text-kt-secondary">Check the private Sheet gateway settings in Vercel, then reload this page. No tester information is shown until the connection succeeds.</p>
-        </section>
-      </main>
-    )
+  const params = await searchParams
+  const status = parseStatusFilter(params.status)
+  if (typeof params.status === 'string') {
+    redirect(status === 'all' ? '/admin/android-requests' : `/admin/android-requests?status=${status}`)
   }
+  const destination = safeAdminDestination(params.next)
+  if (await isAuthenticatedAdmin()) redirect(destination)
 
-  return <Dashboard initialRequests={requests} />
+  return (
+    <main className="min-h-screen bg-kt-canvas px-5 py-5 text-kt-ink sm:px-8 sm:py-8">
+      <div className="mx-auto flex min-h-[calc(100vh-2.5rem)] max-w-lg flex-col justify-center rounded-[24px] border border-kt-ink/10 bg-kt-cream px-6 py-12 shadow-soft sm:min-h-[calc(100vh-4rem)] sm:px-10">
+        <p className="text-lg font-bold tracking-[-0.04em]">Kidture</p>
+        <p className="mt-10 text-sm font-semibold text-kt-olive-teal">Private workspace</p>
+        <h1 className="mt-3 text-4xl font-bold tracking-[-0.05em]">Administration</h1>
+        <p className="mt-4 text-base leading-7 text-kt-secondary">Sign in to view aggregate app usage and manage Android beta access.</p>
+        <LoginForm destination={destination} />
+      </div>
+    </main>
+  )
 }
