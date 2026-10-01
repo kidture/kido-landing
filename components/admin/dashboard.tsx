@@ -173,17 +173,11 @@ export default function Dashboard({ initialRequests }: Props) {
     }
   }
 
-  async function logout() {
-    await fetch('/api/admin/auth/logout', { method: 'POST' })
-    window.location.assign('/admin/login')
-  }
-
   return (
-    <main className="min-h-screen bg-kt-canvas px-4 py-4 text-kt-ink sm:px-8 sm:py-8">
-      <div className="mx-auto min-h-[calc(100vh-2rem)] max-w-page rounded-[24px] border border-kt-ink/10 bg-kt-cream shadow-soft sm:min-h-[calc(100vh-4rem)]">
+      <div className="rounded-[24px] border border-kt-ink/10 bg-kt-cream shadow-soft">
         <header className="flex flex-col gap-5 border-b border-kt-ink/10 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-9">
-          <div><p className="text-lg font-bold tracking-[-0.04em] text-kt-ink">Kidture</p><p className="mt-1 text-sm text-kt-signpost">Beta testing operations</p></div>
-          <div className="flex flex-wrap gap-3"><a href="/api/admin/exports/active" className="inline-flex min-h-11 items-center justify-center rounded-control border border-kt-ink/15 bg-white px-4 text-sm font-semibold text-kt-ink transition-colors hover:bg-kt-cream-muted">Download active testers CSV</a><button type="button" onClick={logout} className="min-h-11 rounded-control px-4 text-sm font-semibold text-kt-secondary transition-colors hover:bg-kt-cream-muted hover:text-kt-ink">Sign out</button></div>
+          <div><p className="text-lg font-bold tracking-[-0.04em] text-kt-ink">Android requests</p><p className="mt-1 text-sm text-kt-signpost">Beta testing operations</p></div>
+          <a href="/api/admin/exports/active" className="inline-flex min-h-11 items-center justify-center rounded-control border border-kt-ink/15 bg-white px-4 text-sm font-semibold text-kt-ink transition-colors hover:bg-kt-cream-muted">Download active testers CSV</a>
         </header>
         <section className="px-6 py-8 sm:px-9 sm:py-10">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between"><div><p className="text-sm font-semibold text-kt-olive-teal">Android beta</p><h1 className="mt-2 text-balance text-3xl font-bold tracking-[-0.05em] sm:text-4xl">Manage beta access with confidence.</h1><p className="mt-3 max-w-2xl text-sm leading-6 text-kt-secondary sm:text-base">Review requests, prepare the complete Play Console list, and send the secure installation email once access is granted.</p></div><p className="rounded-control bg-kt-cream-deep px-4 py-3 text-sm font-semibold text-kt-secondary">{countLabel(requests.length, 'request')}</p></div>
@@ -204,6 +198,5 @@ export default function Dashboard({ initialRequests }: Props) {
           <div className="mt-6"><RequestTable requests={visibleRequests} selectedIds={selectedIds} savingIds={savingIds} onToggleSelected={toggleSelected} onSave={saveRequest} /></div>
         </section>
       </div>
-    </main>
   )
 }

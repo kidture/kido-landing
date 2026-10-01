@@ -1,7 +1,7 @@
 # Admin app usage — frontend design
 
 **Date:** 2026-09-30
-**Status:** Proposed for review; no frontend or backend implementation started
+**Status:** Implemented as five focused usage views; the route and interaction update below supersedes the original single-page sketch.
 
 ## Purpose
 
@@ -16,15 +16,19 @@ The usage page is read only. Filters and chart selections change what is viewed;
 | `/admin` | Sign-in page. An already signed-in admin goes to `/admin/app-usage`. |
 | `/admin/login` | Redirects to `/admin` for existing bookmarks, preserving a safe internal destination. |
 | `/admin/android-requests` | Existing Android beta request dashboard, including its current status filter, request actions, invitation flow, and CSV export. Existing `/admin?status=…` links redirect here with the status preserved. |
-| `/admin/app-usage` | New aggregate-only usage dashboard. |
+| `/admin/app-usage` | Aggregate usage overview and default usage view. |
+| `/admin/app-usage/value` | Where value happens. |
+| `/admin/app-usage/activity` | Daily and weekly saved activity. |
+| `/admin/app-usage/retention` | Signup cohorts and account-age activity. |
+| `/admin/app-usage/timing` | Local time of day. |
 
 Both inner pages use the existing admin session and a shared admin shell. On desktop, a persistent left sidebar shows Kidture at the top, **App usage** and **Android requests** as the two primary navigation items, and **Sign out** at the bottom. The current page is visibly highlighted and marked with `aria-current="page"`. App usage is the default destination after sign-in. A direct visit to either inner page while signed out goes to `/admin`, then returns to the requested page after login. Only allowlisted internal admin destinations are accepted for this return path. This keeps deep links and request filters useful without creating another login system.
 
 ## Page layout
 
-The app usage page sits in the main area to the right of the sidebar, with a readable content width. Its top contains the heading **App usage**, a quiet **Internal · read only** label, the last generated time, and a short sentence: “Aggregate saved activity across active households.” A compact date control offers **Last 7 days**, **Last 30 days** (default), **Last 90 days**, and **Custom range**. All period-based sections share that selection. A day/week switch changes only the activity chart's grouping; week buckets start Monday.
+Each usage view sits in the main area to the right of the sidebar, with a readable content width. Its top contains the heading **App usage**, a quiet **Internal · read only** label, the last generated time, and a short sentence: “Aggregate saved activity across active households.” A five-link view navigation selects **Overview**, **Where value happens**, **Activity**, **Coming back**, or **Local time**. A compact date control offers **Last 7 days**, **Last 30 days** (default), **Last 90 days**, and **Custom range**. The chosen range persists across view links. A day/week switch changes only the activity chart's grouping; week buckets start Monday.
 
-The content order follows the questions a founder will ask:
+Each view answers one question a founder will ask:
 
 1. **Overview.** Six compact figures: eligible active households (current state); households with saved activity today; households with saved activity yesterday; households active in the selected period; total saved actions; and actions per active household. Today is labeled as a partial local day. These cards use the backend's per-household timezone rules, not the browser's timezone.
 2. **Where value happens.** One simple horizontal bar list of approved action types, showing both distinct households and saved action counts. It groups capture/logging, schedules and completed events, wellness check-ins, and recent clinician reports. A nearby two-way view shows **subject** (parent, child, mixed) or **capture method** (voice, text, quick log, form, other manual). Connected-device households appear as a separate current-state figure, never mixed into caregiver actions. The UI does not call these “world visits” or claim that a feature was opened.
@@ -34,32 +38,7 @@ The content order follows the questions a founder will ask:
 
 The final note also explains that deleted schedules/moments and seven-day clinician-report expiry can change older aggregates. Clinician-report figures carry a visible **recent 7-day coverage** label; an older date range does not display their missing history as zero. No time-spent, page-view, or literal app-open card appears because the current source records cannot support it.
 
-### Rough hierarchy
-
-```text
-┌─────────────────────┬───────────────────────────────────────────────┐
-│ Kidture             │ App usage                   Internal · read only│
-│                     │ Aggregate saved activity across households    │
-│ ▌ App usage         │ [7 days] [30 days] [90 days] [Custom range]   │
-│   Android requests  │                                               │
-│                     │ [Active households] [Saved today] [Yesterday] │
-│                     │ [Active in period] [Actions] [Actions / house]│
-│                     │                                               │
-│                     │ Where value happens    [Subject | Method]     │
-│                     │   grouped horizontal bars                      │
-│                     │                                               │
-│                     │ Activity over time       [Daily | Weekly]     │
-│                     │   bars with exact values                       │
-│                     │                                               │
-│                     │ Coming back          Week 1  2  3  4          │
-│                     │   eligible / returned / rate / actions        │
-│                     │                                               │
-│ Sign out            │ Local time of day  [Households | Actions]     │
-│                     │ How these numbers are counted                  │
-└─────────────────────┴───────────────────────────────────────────────┘
-
-The Android requests page uses the same sidebar, with **Android requests** highlighted; its existing management content occupies the main area.
-```
+The Android requests page uses the same sidebar, with **Android requests** highlighted; its existing management content occupies the main area. The shared range controls and coverage note appear on each usage view. Subject/Method, Daily/Weekly, and Households/Actions are local controls: they change the current view without a route change, new API call, or scroll reset.
 
 ## Responsive behavior and accessibility
 
@@ -67,14 +46,14 @@ At desktop width the sidebar remains visible, the overview uses a three-column g
 
 ## Data and loading behavior
 
-The backend aggregate API described in the reference spec is not implemented yet. The production page must never silently present fabricated figures as live usage. For this frontend review, a clearly marked **Illustrative data** state may show representative aggregates so the layout can be evaluated. The live state replaces those figures only when a protected backend response is available. If that response is unavailable or fails, the page shows a clear “Usage data is not connected” or retry state, not zeroes. An actual empty period shows zero counts and an empty-series explanation.
+The backend aggregate API is implemented. The production page must never silently present fabricated figures as live usage. If a protected response is unavailable or fails, that view shows “Usage data is not connected” with a retry link, not zeroes. An actual empty period shows zero counts and an empty-series explanation.
 
-The landing server reads the existing admin session and calls the backend with its dedicated analytics secret on the server only. The browser receives only the approved aggregate response; the secret and raw source rows never reach client code. The frontend can ask for overview, activity series, cohorts, and local-hour sections separately so changing a filter need not recompute unrelated sections. Final endpoint names, query parameters, and response nesting are chosen with the backend implementation. The browser never queries Kido's operational database directly.
+The landing server reads the existing admin session and calls one of five backend section APIs with its dedicated analytics secret on the server only: `GET /api/v1/internal/usage-analytics/{section}?start=...&end=...`. The browser receives only the matching aggregate section; the secret and raw source rows never reach client code. Each view loads its own section. The browser never queries Kido's operational database directly.
 
 The selected date range is reflected in the URL for refresh and sharing among admins. The route validates malformed dates and resets to the 30-day default. Values carry their denominators and the backend's `generated_at`, metric version, and coverage flags. The interface formats those values but does not redefine them.
 
 ## Scope and checks
 
-The first build should include route moves, navigation, responsive read-only dashboard, filters, honest illustrative/disconnected/empty states, and the server-side aggregate data boundary. The usage page does not add account drilldowns, exports, third-party analytics, chart libraries, or investor sharing. No source-record updates come from `/admin/app-usage`.
+The build includes route moves, navigation, responsive read-only views, filters, honest disconnected/empty states, and the server-side aggregate data boundary. The usage views do not add account drilldowns, exports, third-party analytics, chart libraries, or investor sharing. No source-record updates come from `/admin/app-usage`.
 
 Before shipping the frontend, verify signed-out redirects and deep-link return, preservation of existing Android request filters and actions, mobile widths, keyboard/touch chart access, date-range behavior, and no identifiers or analytics secret in browser output. The data integration is complete only when the backend read API exists and real aggregate fixtures have been checked end to end.
